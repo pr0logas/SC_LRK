@@ -3,6 +3,7 @@ pragma solidity >=0.7.0 <0.8.0;
 
 //:: Authors: 
     // Tomas Andriekus pr0logas[@]protonmail.com
+    // Karolis Birgela karolisbirgela[@]gmail.com
 
 contract LRK {
 
@@ -39,4 +40,5 @@ mapping(uint8 => Constitution_Data) public constitution;
        selfdestruct(msg.sender);
    }
 }
+
 
