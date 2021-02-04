@@ -26,12 +26,14 @@ mapping(uint8 => mapping(uint8 => string)) public article_law_map;
             hex"c5bd6d6f676175732074656973c49773206972206c61697376c49773207972612070726967696d74696ec497732e",
             hex"c5bd6d6f676175732074656973c49920c4af206779767962c49920736175676f20c4af73746174796d61732e"
             ];
+           
             
         for (uint8 i = 1; i <= ARTICLE_COUNT; i++) {
-            for (uint8 j = 0; i <= laws.length; i++) {
-                article_law_map[i] = j, laws[j];
+            for (uint8 j = 0; j < laws.length; j++) {
+            //    article_law_map[i][j] = laws[j]; << -- Neveikia
             }
         }
+        
  
 /*
         string[20]
