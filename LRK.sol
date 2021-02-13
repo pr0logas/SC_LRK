@@ -127,6 +127,7 @@ string[] private laws = [
         }
     }
   
+    // Needs update; Currently returns only the last law on the provided article
     function getArticle(uint8 _number) public view returns(string memory result){
         (uint8 _start, uint8 _end) = getArticleRange(_number);
         result = getLaw(_end);
