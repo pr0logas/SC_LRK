@@ -127,12 +127,20 @@ string[] private laws = [
         }
     }
   
-    // Needs update; Currently returns only the last law on the provided article
-    function getArticle(uint8 _number) public view returns(string memory result){
+    // Needs update; Do we need a function that returns a bulk of specific array values? (laws)
+    function getArticle(uint8 _number) public view returns(uint8[] memory _result){
         (uint8 _start, uint8 _end) = getArticleRange(_number);
-        result = getLaw(_end);
-
+        
+        uint8 _arr_size = laws_per_article[_number];
+        //result = getLaw(_end);
     }
+    
+    function getTotalLaws() public view returns(uint8 _result) {
+        for (uint8 article_index = 0; article_index < law_count_per_article.length; article_index++) {
+            _result = _result + law_count_per_article[article_index];
+        }
+    }
+    
 
     struct Constitution_Data {
         string constitution_section_intro;
