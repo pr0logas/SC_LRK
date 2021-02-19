@@ -1,73 +1,27 @@
-pragma solidity >=0.7.0 <0.8.0;
+pragma solidity >=0.7.0 <0.8.6;
 
-//:: Authors:
-// Tomas Andriekus pr0logas[@]protonmail.com
-// Karolis Birgela karolisbirgela[@]gmail.com
-
-import "LRK_LAWS.sol";
-
-contract LRK is LRK_LAWS {
-
-address private OWNER;
-uint public SMART_CONTRACT_RELEASE_BY_UNIXTIME;
-uint32 public constant CONSTITUTION_RELEASE_BY_UNIXTIME = 720716400;
-mapping(uint8 => Constitution_Data) public constitution;
-uint8 private constant ARTICLE_COUNT = 15;
-
-//mapping(uint8 => mapping(uint8 => string)) public article_law_map;
-
-mapping(uint8 => string) public call_law;
-mapping(uint8 => uint8) public laws_per_article;
+contract SongokasOver9000 {
+    function getLaws(uint8 law) public view returns(string memory result) {}
+}
 
 
-// Constitution text values
-string public constant LITHUANIAN_ROOTS_INFO = hex"4c494554555649c5b22054415554410a0ae280932070726965c5a12064617567656cc4af20616dc5be69c5b32073756bc5ab72757369204c69657475766f732076616c73747962c4992c0ae28093206a6f732074656973696e6975732070616d61747573206772696e64757369204c69657475766f7320537461747574616973206972204c69657475766f73205265737075626c696b6f73204b6f6e737469747563696a6f6d69732c0ae2809320c5a1696d746d65c48d696169732061746b616b6c6961692067796e757369207361766f206c61697376c499206972206e657072696b6c6175736f6d7962c4992c0ae280932069c5a1736175676f6a757369207361766f206476617369c4852c2067696d74c4856ac485206b616c62c4852c207261c5a174c48520697220706170726fc48d6975732c0ae2809320c4af6bc5ab6e7964616d612070726967696d74696ec49920c5be6d6f6761757320697220546175746f732074656973c499206c61697376616920677976656e7469206972206b75727469207361766f2074c49776c5b32069722070726f74c4977669c5b320c5be656dc4976a6520e28093206e657072696b6c6175736f6d6f6a65204c69657475766f732076616c73747962c4976a652c0ae280932070756f73656cc49764616d61204c69657475766f7320c5be656dc4976a652074617574696ec4992073616e74617276c4992c0ae28093207369656b64616d612061747669726f732c2074656973696e676f732c206461726e696f732070696c696574696ec4977320766973756f6d656ec497732069722074656973696ec497732076616c73747962c497732c0a617467696d7573696f73204c69657475766f732076616c73747962c497732070696c6965c48d69c5b32076616c696120707269696d6120697220736b656c62696120c5a169c485204b4f4e535449545543494ac4842e";
+contract LRK {
+    address private OWNER;
+    uint public SMART_CONTRACT_RELEASE_BY_UNIXTIME;
+    uint32 public constant CONSTITUTION_RELEASE_BY_UNIXTIME = 720716400;
+    uint8 private constant ARTICLE_COUNT = 15;
+    string public constant LITHUANIAN_ROOTS_INFO = hex"4c494554555649c5b22054415554410a0ae280932070726965c5a12064617567656cc4af20616dc5be69c5b32073756bc5ab72757369204c69657475766f732076616c73747962c4992c0ae28093206a6f732074656973696e6975732070616d61747573206772696e64757369204c69657475766f7320537461747574616973206972204c69657475766f73205265737075626c696b6f73204b6f6e737469747563696a6f6d69732c0ae2809320c5a1696d746d65c48d696169732061746b616b6c6961692067796e757369207361766f206c61697376c499206972206e657072696b6c6175736f6d7962c4992c0ae280932069c5a1736175676f6a757369207361766f206476617369c4852c2067696d74c4856ac485206b616c62c4852c207261c5a174c48520697220706170726fc48d6975732c0ae2809320c4af6bc5ab6e7964616d612070726967696d74696ec49920c5be6d6f6761757320697220546175746f732074656973c499206c61697376616920677976656e7469206972206b75727469207361766f2074c49776c5b32069722070726f74c4977669c5b320c5be656dc4976a6520e28093206e657072696b6c6175736f6d6f6a65204c69657475766f732076616c73747962c4976a652c0ae280932070756f73656cc49764616d61204c69657475766f7320c5be656dc4976a652074617574696ec4992073616e74617276c4992c0ae28093207369656b64616d612061747669726f732c2074656973696e676f732c206461726e696f732070696c696574696ec4977320766973756f6d656ec497732069722074656973696ec497732076616c73747962c497732c0a617467696d7573696f73204c69657475766f732076616c73747962c497732070696c6965c48d69c5b32076616c696120707269696d6120697220736b656c62696120c5a169c485204b4f4e535449545543494ac4842e";
+    mapping(uint8 => string) public call_law;
+    mapping(uint8 => uint8) public laws_per_article;
 
     constructor() {
-        uint8[16] memory law_count_per_article = [0, 17, 20, 8, 9, 22, 14, 11, 7, 10, 6, 8, 2, 12, 3, 5];
-        
-        // Maps articles with a number of laws in it
-        for (uint8 i = 0; i < law_count_per_article.length; i++){
-            laws_per_article[i] = law_count_per_article[i];
-        }
-
-        /*
-        // i = article number (1 - 15)
-        // j = law number (1 - 154)
-        for (uint8 i = 1; i <= ARTICLE_COUNT; i++) {
-            for (uint8 j = 0; j < laws.length; j++) {
-                //article_law_map[i][j] = article[j];
-                law_value_map[j] = laws[j];
-                
-            }
-        }
-        */
-
-        // Call any law by number
-        for (uint8 j = 0; j < laws.length; j++) {
-            call_law[j] = laws[j];
-        }
-        
-        
         OWNER = msg.sender;
         SMART_CONTRACT_RELEASE_BY_UNIXTIME = block.timestamp;
-        string memory constitution_section_intro1 = hex"4c49455455564f532056414c53545942c496";
-        string memory constitution_law1 = hex"4c69657475766f732076616c73747962c49720797261206e657072696b6c6175736f6d612064656d6f6b726174696ec497207265737075626c696b612e";
-        constitution[1] = Constitution_Data(constitution_section_intro1, 1, constitution_law1);
-        
-         
-    }
-    
 
+        }
 
-    struct Constitution_Data {
-        string constitution_section_intro;
-        uint8 constitution_number;
-        string constitution_law;
-    }
-
-    function add_constitution_item(uint8 _constitution_section_number, string memory _constitution_section_intro, uint8 _constitution_number, string memory constitution_law) public is_owner {
-        constitution[_constitution_section_number] = Constitution_Data(_constitution_section_intro, _constitution_number, constitution_law);
+    function readLaw1(address addr) public view returns (string memory answer){
+        return SongokasOver9000(addr).getLaws(1);
     }
 
     modifier is_owner() {
