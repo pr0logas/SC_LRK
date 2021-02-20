@@ -7,18 +7,38 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
     <script src="web3.min.js"></script> 
     <script src="./index.js"></script>    
+    <style type="text/css">
+
+      .clientWalletAddrPostition {
+      position:absolute;
+      top:10px;
+      right: 10px;
+      }
+
+      .releaseDatePosition {
+      position:absolute;
+      bottom: 30px;
+      right: 10px;
+      }
+
+      .authorsPosition {
+      position:absolute;
+      bottom: 10px;
+      right: 10px;
+      }
+    </style>
   </head>
 
   <body class="container">
+
+    <h5 class="clientWalletAddrPostition">Your account: <span id="client_Account">Can't detect wallet addr?</span></h3>
 
     <h1 class="page-header"><span><img class="ltflag" src=""></span><span id="lrktitle"></span></h1> 
 
     <div class="row">
       <div>
-        <h2 class="sub-header">Get laws information</h3>
-        <h5 class="sub-header">Your account: <span id="client_Account">?</span></h3>
+        
         <form class="form-inline" role="form">
-          <a href="#" onclick="get_laws_info()" class="btn btn-primary">Get LAWS</a>
           <div class="form-group">
             <table>
               <tr>
@@ -38,6 +58,9 @@
         </form>
       </div>
     </div>
+
+    <h5 class="authorsPosition"><span id="authors"></span></h5>    
+    <h5 class="releaseDatePosition"><span id="screleasedate"></h5> 
 
   </body>
 </html>

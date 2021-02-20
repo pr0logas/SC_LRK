@@ -20,8 +20,8 @@ else {
 console.log (window.web3.currentProvider)
 
 // contractAddress and abi are setted after contract deploy
-var CONTRACT_ADDRESS = '0x07Af30352577eb19135E180357B991056a297535';
-var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_caller","type":"address"},{"indexed":true,"internalType":"uint8","name":"_law_number","type":"uint8"}],"name":"Caller","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"","type":"uint8"}],"name":"laws_per_article","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_1","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_2","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
+var CONTRACT_ADDRESS = '0xCdE20D9D4F0a18234F0c3ab9D22e0cbBC7d23b4a';
+var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_caller","type":"address"},{"indexed":true,"internalType":"uint8","name":"_law_number","type":"uint8"}],"name":"Caller","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"","type":"uint8"}],"name":"laws_per_article","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_1","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_2","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
 
 //CONTRACT instance
 CONTRACT = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
@@ -39,7 +39,6 @@ web3.eth.getAccounts(function(err, accounts) {
     return;
   }
   client_account = accounts[0];
-  console.log('Account: ' + client_account);
   document.getElementById('client_Account').innerHTML = client_account;
   web3.eth.defaultAccount = client_account;
 });
@@ -56,7 +55,6 @@ function registerSetInfo() {
 // LRK Title
 (function () {
   CONTRACT.methods.LRK_TITLE().call().then( function( title ) { 
-    console.log("title: ", title); 
     $("#lrktitle").text(" " + title);
   });
 })();
@@ -68,21 +66,40 @@ function registerSetInfo() {
   });
 })();
 
-function get_laws_info() {
+// Authors
+(function () {
+  CONTRACT.methods.SC_AUTHORS().call().then( function( authors ) { 
+    $("#authors").html(authors);
+  });
+})();
+
+// SC Publish date
+(function () {
+  CONTRACT.methods.SMART_CONTRACT_RELEASE_BY_UNIXTIME().call().then( function( sc_release_date ) { 
+  var a = new Date(sc_release_date * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  $("#screleasedate").html(time);
+  });
+})();
+
+(function () {
   CONTRACT.methods.read_laws_1(1).call().then( function( info ) { 
-    console.log("Output: ", info);
     document.getElementById('law1_Info').innerHTML = info;
   });    
     CONTRACT.methods.read_laws_1(2).call().then( function( info ) { 
-    console.log("Output: ", info);
     document.getElementById('law2_Info').innerHTML = info;
   });  
     CONTRACT.methods.read_laws_1(3).call().then( function( info ) { 
-    console.log("Output: ", info);
     document.getElementById('law3_Info').innerHTML = info;
   });  
     CONTRACT.methods.read_laws_1(4).call().then( function( info ) { 
-    console.log("Output: ", info);
     document.getElementById('law4_Info').innerHTML = info;
   });  
-}
+})();
