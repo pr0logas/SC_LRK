@@ -54,7 +54,7 @@ function registerSetInfo() {
   $("#newInfo").val('');
 }
 
-function registerGetInfo() {
+function get_laws_info() {
   contract.methods.read_laws_1(1).call().then( function( info ) { 
     console.log("info: ", info);
     document.getElementById('lastInfo').innerHTML = info;
