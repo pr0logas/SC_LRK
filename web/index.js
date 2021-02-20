@@ -40,6 +40,7 @@ web3.eth.getAccounts(function(err, accounts) {
   }
   client_account = accounts[0];
   console.log('Account: ' + client_account);
+  document.getElementById('client_Account').innerHTML = client_account;
   web3.eth.defaultAccount = client_account;
 });
 
