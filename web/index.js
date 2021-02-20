@@ -53,8 +53,20 @@ function registerSetInfo() {
 }
 
 function get_laws_info() {
-  CONTRACT.methods.read_laws_1(17).call().then( function( info ) { 
+  CONTRACT.methods.read_laws_1(1).call().then( function( info ) { 
     console.log("Output: ", info);
-    document.getElementById('lastInfo').innerHTML = info;
+    document.getElementById('law1_Info').innerHTML = info;
   });    
+    CONTRACT.methods.read_laws_1(2).call().then( function( info ) { 
+    console.log("Output: ", info);
+    document.getElementById('law2_Info').innerHTML = info;
+  });  
+    CONTRACT.methods.read_laws_1(3).call().then( function( info ) { 
+    console.log("Output: ", info);
+    document.getElementById('law3_Info').innerHTML = info;
+  });  
+    CONTRACT.methods.read_laws_1(4).call().then( function( info ) { 
+    console.log("Output: ", info);
+    document.getElementById('law4_Info').innerHTML = info;
+  });  
 }
