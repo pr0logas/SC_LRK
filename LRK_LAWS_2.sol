@@ -26,8 +26,8 @@ contract LRK_LAWS_2 {
     hex"50696c6965c48d6961692c207072696b6c617573616e7479732074617574696ec4976d732062656e6472696a6f6d732c20747572692074656973c4992070756f73656cc4977469207361766f206b616c62c4852c206b756c74c5ab72c48520697220706170726fc48d6975732e"
     ];
 
-    function get_laws(uint8 number) public view returns(string memory result) {
-        result = laws[number];
+    function get_laws(uint8 _number) public view returns (string memory result) {
+        result = laws[_number];
         return result;
     }
 

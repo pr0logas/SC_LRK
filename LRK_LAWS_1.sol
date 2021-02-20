@@ -1,7 +1,7 @@
 pragma solidity >=0.7.0 <0.8.6;
 
 contract LRK_LAWS_1 {
-    
+
     string[] public laws = [
     "",
     hex"4c69657475766f732076616c73747962c49720797261206e657072696b6c6175736f6d612064656d6f6b726174696ec497207265737075626c696b612e",
@@ -22,10 +22,11 @@ contract LRK_LAWS_1 {
     hex"56616c73747962c497732068696d6e617320e280932056696e636f204b756469726b6f7320e2809e5461757469c5a16b6120676965736dc497e2809c2e",
     hex"4c69657475766f732076616c73747962c4977320736f7374696ec497207972612056696c6e69617573206d69657374617320e2809320696c6761616dc5bec497206973746f72696ec497204c69657475766f7320736f7374696ec4972e"
     ];
-    
-    function get_laws(uint8 number) public view returns(string memory result) {
-        result = laws[number];
+
+    function get_laws(uint8 _number) public view returns (string memory result) {
+        result = laws[_number];
         return result;
     }
-    
+
 }
+
