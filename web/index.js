@@ -11,7 +11,7 @@ if (window.ethereum) {
   }
 }
 else if (window.web3) {
-  window.web3 = new Web3(window.web3.currentProvider)
+  window.web3 = new Web3(window.web3.currentProvider || new Web3.providers.HttpProvider('http://localhost:8545'));
   // no need to ask for permission
 }
 else {
