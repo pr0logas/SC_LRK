@@ -22,7 +22,7 @@ else {
 console.log (window.web3.currentProvider)
 
 // contractAddress and abi are setted after contract deploy
-var contractAddress = '0xc864D0fef177A69aFa8E302A1b90e450910A4c3E';
+var contractAddress = '0xB55D8cFC73D44857b880e8D6381F97aA2FbDCDE2';
 var abi = JSON.parse( '[{"constant":true,"inputs":[],"name":"getInfo","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_info","type":"string"}],"name":"setInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]' );
 
 //contract instance
@@ -55,7 +55,7 @@ function registerSetInfo() {
 }
 
 function registerGetInfo() {
-  contract.methods.getInfo().call().then( function( info ) { 
+  contract.methods.read_laws_1(1).call().then( function( info ) { 
     console.log("info: ", info);
     document.getElementById('lastInfo').innerHTML = info;
   });    
