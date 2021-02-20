@@ -46,7 +46,7 @@ web3.eth.getAccounts(function(err, accounts) {
 //Smart CONTRACT functions
 function registerSetInfo() {
   info = $("#newInfo").val();
-  CONTRACT.methods.setInfo (info).send( {from: client_account}).then( function(tx) { 
+  CONTRACT.methods.setInfo(info).send( {from: client_account}).then( function(tx) { 
     console.log("Transaction: ", tx); 
   });
   $("#newInfo").val('');
