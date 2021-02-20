@@ -1,5 +1,3 @@
-// Source code to interact with smart contract
-
 // web3 provider with fallback for old version
 if (window.ethereum) {
   window.web3 = new Web3(window.ethereum)
@@ -22,14 +20,14 @@ else {
 console.log (window.web3.currentProvider)
 
 // contractAddress and abi are setted after contract deploy
-var contractAddress = '0xB55D8cFC73D44857b880e8D6381F97aA2FbDCDE2';
-var abi = JSON.parse( '[{"constant":true,"inputs":[],"name":"getInfo","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_info","type":"string"}],"name":"setInfo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]' );
+var CONTRACT_ADDRESS = '0xB55D8cFC73D44857b880e8D6381F97aA2FbDCDE2';
+var ABI = JSON.parse('[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint8","name":"","type":"uint8"}],"name":"laws_per_article","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_1","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_2","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}]');
 
-//contract instance
-contract = new web3.eth.Contract(abi, contractAddress);
+//CONTRACT instance
+CONTRACT = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
 // Accounts
-var account;
+var client_account;
 
 web3.eth.getAccounts(function(err, accounts) {
   if (err != null) {
@@ -37,26 +35,26 @@ web3.eth.getAccounts(function(err, accounts) {
     return;
   }
   if (accounts.length == 0) {
-    alert("No account found! Make sure the Ethereum client is configured properly.");
+    alert("No client_account found! Make sure the Ethereum client is configured properly.");
     return;
   }
-  account = accounts[0];
-  console.log('Account: ' + account);
-  web3.eth.defaultAccount = account;
+  client_account = accounts[0];
+  console.log('Account: ' + client_account);
+  web3.eth.defaultAccount = client_account;
 });
 
-//Smart contract functions
+//Smart CONTRACT functions
 function registerSetInfo() {
   info = $("#newInfo").val();
-  contract.methods.setInfo (info).send( {from: account}).then( function(tx) { 
+  CONTRACT.methods.setInfo (info).send( {from: client_account}).then( function(tx) { 
     console.log("Transaction: ", tx); 
   });
   $("#newInfo").val('');
 }
 
 function get_laws_info() {
-  contract.methods.read_laws_1(1).call().then( function( info ) { 
-    console.log("info: ", info);
+  CONTRACT.methods.read_laws_1(17).call().then( function( info ) { 
+    console.log("Output: ", info);
     document.getElementById('lastInfo').innerHTML = info;
   });    
 }
