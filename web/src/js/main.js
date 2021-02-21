@@ -63,12 +63,20 @@ web3.eth.getAccounts(function(err, accounts) {
   });
 })();
 
+// Donated People
+(function () {
+  CONTRACT.methods.donated_people(1).call().then( function( donated ) { 
+    console.log(donated);
+    //$("#donated").html(donated);
+  });
+})();
+
 // LAWS
 (function () {
-  for (let i = 1; i <= 25; i++) {
+  for (let i = 1; i <= 20; i++) {
       CONTRACT.methods.read_law(i).call().then( function( info ) {
-      let law = 'law' + i;
-      document.getElementById(law).innerHTML = info;
+      let lawnum = 'law' + i;
+      document.getElementById(lawnum).innerHTML = info;
     }); 
   };
 })();
