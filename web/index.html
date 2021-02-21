@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html >
   <head>
-    <title>Register information at Blockchain</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lietuvos Respublikos Konstitucija - ETH Blockchain</title>
 
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
-    <script src="web3.min.js"></script>  
-    <script src="./index.js"></script>     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
     <style type="text/css">
 
       .clientWalletAddrPostition {
@@ -38,36 +38,51 @@
 
   <body class="container">
 
-    <h5 class="clientWalletAddrPostition">Your account: <span id="client_Account">Can't detect wallet addr?</span></h3>
+    <h6 class="clientWalletAddrPostition"><span id="client_Account"></span></h6>
 
-    <h1 class="page-header"><span><img class="ltflag" src=""></span><span id="lrktitle"></span></h1> 
+    <center><h1 class="page-header"><span><img class="ltflag" src=""></span><span id="lrktitle"></span></h1></center>
 
-    <div class="row">
-      <div>
-        
-        <form class="form-inline" role="form">
-          <div class="form-group">
-            <table>
-              <tr>
-                <td></td>
-                <td>
-                  <label id="law1_Info">
-                  <tr>
-                  <label id="law2_Info">
-                  <tr>
-                  <label id="law3_Info">
-                  <tr>
-                  <label id="law4_Info">
-                </td>                          
-              </tr>
-            </table>
-          </div>                
-        </form>
-      </div>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">I SKIRSNIS - LIETUVOS VALSTYBĖ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1.</th>
+          <td><span id="law1_Info">Kraunama iš blockchain...</td>
+        </tr>
+        <tr>
+          <th scope="row">2.</th>
+          <td><span id="law2_Info">Kraunama iš blockchain...</td>
+        </tr>
+        <tr>
+          <th scope="row">3.</th>
+          <td><span id="law3_Info">Kraunama iš blockchain...</td>
+        </tr>
+        <tr>
+          <th scope="row">4.</th>
+          <td><span id="law4_Info">Kraunama iš blockchain...</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-secondary text-center" role="alert">
+      Prisidėti prie projekto ir įsiamžinti:
     </div>
+
+    <img src="https://robohash.org/0xF1567A1d334d0aBcEcF52AfBD49cfBDd5A781f1a.png?set=set1&size=32x32" onerror="this.style.display='none'">
     
-    <h5 class="authorsPosition"><span id="authors"></span></h5>    
-    <h5 class="releaseDatePosition"><span id="screleasedate"></h5> 
+    <h6 class="authorsPosition"><span id="authors"></span></h6>    
+    <h6 class="releaseDatePosition"><span id="screleasedate"></h6> 
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="src/js/web3.min.js"></script>  
+    <script src="src/js/main.js"></script>     
 
   </body>
 </html>
