@@ -4,6 +4,7 @@ contract LRK_LAWS {
     function get_laws(uint8 number) public view returns(string memory) {}
 }
 
+
 contract LRK {
     address payable public OWNER;
     uint public SMART_CONTRACT_RELEASE_BY_UNIXTIME;
@@ -13,7 +14,6 @@ contract LRK {
     string public constant LRK_TITLE = hex"4c69657475766f73205265737075626c696b6f73204b6f6e737469747563696a61";
     string public constant SC_AUTHORS = hex"4b61726f6c69732042697267c4976c61202620546f6d617320416e647269656b7573";
     DonatedPeople public donated_people;
-
     uint8[16] private LAW_COUNT_PER_ARTICLE = [0, 17, 20, 8, 9, 22, 14, 11, 7, 10, 6, 8, 2, 12, 3, 5];
     address[16] private LRK_ARTICLE_ADDRESSES = [
         0x0000000000000000000000000000000000000000,
@@ -32,7 +32,7 @@ contract LRK {
         0xD88Be5804B6DCb8F93B7f18E83bd8796161444b5,
         0x798C7705b83D4498ba57F85CD42Dd8510A82Ab18,
         0xf509dD2a1F3a152C6999F9da468B371501ab45dF
-        ];
+    ];
 
     constructor() {
         OWNER = msg.sender;
@@ -59,7 +59,7 @@ contract LRK {
 
      // Returns the law range for the Nth article
      // CURRENTLY UNUSED
-    function getArticleRange(uint8 _number) private view returns(uint8 _start, uint8 _end){
+    function get_article_range(uint8 _number) private view returns(uint8 _start, uint8 _end){
         _start = 1;
         
         // This loop sums all law counts up to the Nth article, provided in _number to form the starting law number;
@@ -74,13 +74,13 @@ contract LRK {
         }
     }
 
-    // Get article number when providing a law number
-    function getArticleNumFromLaw(uint8 _law_number) private view returns (uint8 result){
-        uint8 _start = 1;
+    // Router to another SC
+    function get_article_number_from_law(uint8 _lawnum) private view returns (uint8 result){
+        uint8 start = 1;
 
         for (uint8 i = 0; i < LAW_COUNT_PER_ARTICLE.length; i++){
-            _start = _start + LAW_COUNT_PER_ARTICLE[i];
-            if (_start > _law_number){
+            start = start + LAW_COUNT_PER_ARTICLE[i];
+            if (start > _lawnum){
                 result = i;
                 break;
             }
@@ -88,12 +88,12 @@ contract LRK {
         return result;
     }
 
-    // Get law value 
+    
     function read_law(uint8 _number) public view law_range_requirement(_number) returns (string memory) {
-        uint8 _article = getArticleNumFromLaw(_number);
-        address _addr = LRK_ARTICLE_ADDRESSES[_article];
+        uint8 _article = get_article_number_from_law(_number);
+        address addr = LRK_ARTICLE_ADDRESSES[_article];
 
-        return LRK_LAWS(_addr).get_laws(_number);
+        return LRK_LAWS(addr).get_laws(_number);
     }
     
 
