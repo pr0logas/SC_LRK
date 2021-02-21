@@ -63,19 +63,14 @@ web3.eth.getAccounts(function(err, accounts) {
   });
 })();
 
+// LAWS
 (function () {
-  CONTRACT.methods.read_laws_1(1).call().then( function( info ) { 
-    document.getElementById('law1_Info').innerHTML = info;
-  });    
-    CONTRACT.methods.read_laws_1(2).call().then( function( info ) { 
-    document.getElementById('law2_Info').innerHTML = info;
-  });  
-    CONTRACT.methods.read_laws_1(3).call().then( function( info ) { 
-    document.getElementById('law3_Info').innerHTML = info;
-  });  
-    CONTRACT.methods.read_laws_1(4).call().then( function( info ) { 
-    document.getElementById('law4_Info').innerHTML = info;
-  });  
+  for (let i = 1; i <= 25; i++) {
+      CONTRACT.methods.read_law(i).call().then( function( info ) {
+      let law = 'law' + i;
+      document.getElementById(law).innerHTML = info;
+    }); 
+  };
 })();
 
 // SC Publish date
