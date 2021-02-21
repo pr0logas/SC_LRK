@@ -1,3 +1,6 @@
+var CONTRACT_ADDRESS = '0xCdE20D9D4F0a18234F0c3ab9D22e0cbBC7d23b4a';
+var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_caller","type":"address"},{"indexed":true,"internalType":"uint8","name":"_law_number","type":"uint8"}],"name":"Caller","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"","type":"uint8"}],"name":"laws_per_article","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_1","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_2","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
+
 // web3 provider with fallback for old version
 if (window.ethereum) {
   window.web3 = new Web3(window.ethereum)
@@ -19,14 +22,9 @@ else {
 }
 console.log (window.web3.currentProvider)
 
-// contractAddress and abi are setted after contract deploy
-var CONTRACT_ADDRESS = '0xCdE20D9D4F0a18234F0c3ab9D22e0cbBC7d23b4a';
-var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_caller","type":"address"},{"indexed":true,"internalType":"uint8","name":"_law_number","type":"uint8"}],"name":"Caller","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"","type":"uint8"}],"name":"laws_per_article","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_1","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_2","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
-
-//CONTRACT instance
 CONTRACT = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
-// Accounts
+// User Accounts
 var client_account;
 
 web3.eth.getAccounts(function(err, accounts) {
@@ -43,14 +41,6 @@ web3.eth.getAccounts(function(err, accounts) {
   web3.eth.defaultAccount = client_account;
 });
 
-//Smart CONTRACT functions
-function registerSetInfo() {
-  info = $("#newInfo").val();
-  CONTRACT.methods.setInfo(info).send( {from: client_account}).then( function(tx) { 
-    console.log("Transaction: ", tx); 
-  });
-  $("#newInfo").val('');
-}
 
 // LRK Title
 (function () {
@@ -73,22 +63,6 @@ function registerSetInfo() {
   });
 })();
 
-// SC Publish date
-(function () {
-  CONTRACT.methods.SMART_CONTRACT_RELEASE_BY_UNIXTIME().call().then( function( sc_release_date ) { 
-  var a = new Date(sc_release_date * 1000);
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-  $("#screleasedate").html(time);
-  });
-})();
-
 (function () {
   CONTRACT.methods.read_laws_1(1).call().then( function( info ) { 
     document.getElementById('law1_Info').innerHTML = info;
@@ -103,3 +77,29 @@ function registerSetInfo() {
     document.getElementById('law4_Info').innerHTML = info;
   });  
 })();
+
+// SC Publish date
+(function () {
+  CONTRACT.methods.SMART_CONTRACT_RELEASE_BY_UNIXTIME().call().then( function( sc_release_date ) { 
+  let a = new Date(sc_release_date * 1000);
+  let months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  let hours = ['00', '01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+  let year = a.getFullYear();
+  let month = months[a.getMonth()];
+  let day = a.getDate();
+  let hour = hours[a.getHours()];
+  let min = a.getMinutes();
+  let sec = a.getSeconds();
+  let time = year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec ;
+  $("#screleasedate").html(time);
+  });
+})();
+
+// Donation
+function contribute_to_the_project() {
+  info = $("#contribute").val();
+  CONTRACT.methods.setInfo(info).send( {from: client_account}).then( function(tx) { 
+    console.log("Transaction: ", tx); 
+  });
+  $("#newInfo").val('');
+}
