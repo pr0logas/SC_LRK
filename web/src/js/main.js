@@ -1,5 +1,5 @@
-var CONTRACT_ADDRESS = '0xCdE20D9D4F0a18234F0c3ab9D22e0cbBC7d23b4a';
-var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_caller","type":"address"},{"indexed":true,"internalType":"uint8","name":"_law_number","type":"uint8"}],"name":"Caller","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"","type":"uint8"}],"name":"laws_per_article","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_1","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_laws_2","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
+var CONTRACT_ADDRESS = '0xB55F000ec023B85ab218e4DD281e1a2709620184';
+var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"uint256","name":"date","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SubscribeDonatedPeople","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"donated_people","outputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"timestamp","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"how_many_people_donated","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"OWNER","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_law","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
 
 // web3 provider with fallback for old version
 if (window.ethereum) {
@@ -63,19 +63,21 @@ web3.eth.getAccounts(function(err, accounts) {
   });
 })();
 
+// Donated People
 (function () {
-  CONTRACT.methods.read_laws_1(1).call().then( function( info ) { 
-    document.getElementById('law1_Info').innerHTML = info;
-  });    
-    CONTRACT.methods.read_laws_1(2).call().then( function( info ) { 
-    document.getElementById('law2_Info').innerHTML = info;
-  });  
-    CONTRACT.methods.read_laws_1(3).call().then( function( info ) { 
-    document.getElementById('law3_Info').innerHTML = info;
-  });  
-    CONTRACT.methods.read_laws_1(4).call().then( function( info ) { 
-    document.getElementById('law4_Info').innerHTML = info;
-  });  
+  CONTRACT.methods.donated_people(1).call().then( function( donated ) { 
+    console.log(donated);
+  });
+})();
+
+// LAWS
+(function () {
+  for (let i = 1; i <= 20; i++) {
+      CONTRACT.methods.read_law(i).call().then( function( info ) {
+      let lawnum = 'law' + i;
+      document.getElementById(lawnum).innerHTML = info;
+    }); 
+  };
 })();
 
 // SC Publish date
@@ -97,9 +99,11 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // Donation
 function contribute_to_the_project() {
-  info = $("#contribute").val();
-  CONTRACT.methods.setInfo(info).send( {from: client_account}).then( function(tx) { 
+  CONTRACT.methods.OWNER().call().then( function(scauthors) {
+    const amount = "0.0005"; 
+    const amountToSend = web3.utils.toWei(amount, "ether"); // Convert to wei value
+    web3.eth.sendTransaction({ from:client_account,to:scauthors, value:amountToSend }).then( function(tx) { ;
     console.log("Transaction: ", tx); 
+    });
   });
-  $("#newInfo").val('');
-}
+};
