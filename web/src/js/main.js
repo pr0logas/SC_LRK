@@ -67,7 +67,6 @@ web3.eth.getAccounts(function(err, accounts) {
 (function () {
   CONTRACT.methods.donated_people(1).call().then( function( donated ) { 
     console.log(donated);
-    //$("#donated").html(donated);
   });
 })();
 
@@ -100,9 +99,11 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // Donation
 function contribute_to_the_project() {
-  info = $("#contribute").val();
-  CONTRACT.methods.setInfo(info).send( {from: client_account}).then( function(tx) { 
+  CONTRACT.methods.OWNER().call().then( function(scauthors) {
+    const amount = "0.0005"; 
+    const amountToSend = web3.utils.toWei(amount, "ether"); // Convert to wei value
+    web3.eth.sendTransaction({ from:client_account,to:scauthors, value:amountToSend }).then( function(tx) { ;
     console.log("Transaction: ", tx); 
+    });
   });
-  $("#newInfo").val('');
-}
+};

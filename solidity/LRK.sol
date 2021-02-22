@@ -102,7 +102,7 @@ contract LRK {
         _;
     }
     
-    receive() external payable minumum_donation_amount(msg.value)  {
+    receive() external payable miniumum_donation_amount(msg.value)  {
         OWNER.transfer(msg.value);
         donated_people.addr = msg.sender;
         donated_people.timestamp = block.timestamp;
@@ -111,7 +111,7 @@ contract LRK {
     }
 
 
-    modifier minumum_donation_amount(uint256 amount) {
+    modifier miniumum_donation_amount(uint256 amount) {
         require(amount >= 0.0005 ether, "The minumum donation amount is 0.0005 Ether");
         _;
     }
