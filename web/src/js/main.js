@@ -73,8 +73,10 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // LAWS
 (function () {
+
   CONTRACT.methods.get_total_laws_count().call().then( function( total_laws ){
-    for (let i = 1; i <= total_laws; i++) {
+    for (let i = 1; i <= 15; i++) {
+
       addLaw(i);
     };
   });
@@ -82,8 +84,8 @@ web3.eth.getAccounts(function(err, accounts) {
 
 function addLaw(lawnum) {
   var li = document.createElement('li');
-  li.setAttribute('class', 'law');
   var hr = document.createElement('hr');
+  li.setAttribute('class', 'law');
 
   CONTRACT.methods.read_law(lawnum).call().then( function( law_value ){
     li.textContent = law_value;
@@ -92,10 +94,22 @@ function addLaw(lawnum) {
   });
 }
 
-function getArticleRange(){
-  CONTRACT.methods.get_article_range(1).call().then( function( result ){
-    console.log("Start: ", result); 
-    console.log("End: ", result); 
+// ARTICLES
+
+function addArticle(articlenum){
+
+}
+
+function getArticleName(articlenum){
+  CONTRACT.methods.LRK_ARTICLES(articlenum).call().then( function( article_name ) { 
+    console.log(article_name);
+  });
+}
+
+function getArticleRange(articlenum){
+  CONTRACT.methods.get_article_range(articlenum).call().then( function( result ){
+    //console.log(result[0]);
+    //return result;
   });
 }
 
