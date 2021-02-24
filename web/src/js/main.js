@@ -66,7 +66,8 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // Donated People
 (function () {
-  CONTRACT.methods.donated_people(0).call().then( function( donated ) { 
+
+  CONTRACT.methods.donated_people(1).call().then( function( donated ) { 
     robohash = `https://robohash.org/` + donated.addr + `.png?set=set1&size=24x24`
     $("#user00").attr("src",robohash);
     $("#user01").text(donated.addr);
@@ -78,39 +79,65 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // LAWS
 (function () {
+  get_article_range(1).then()
 
-  CONTRACT.methods.get_total_laws_count().call().then( function( total_laws ){
-    for (let i = 1; i <= total_laws; i++) {
-      addLaw(i);
+
+
+  total_laws = get_total_laws().then( (value) => { return value; });
+  total_laws.then(function (value){
+
+    for (let i = 1; i <= 15; i++) {
+      //article_name = get_article_name(i);
+
+      add_law(i);
     };
   });
 })();
 
-function addLaw(lawnum) {
+
+function populate_articles_laws(argumentas){
+  console.log(argumentas);
+}
+
+function add_law(lawnum) {
   var li = document.createElement('li');
   var hr = document.createElement('hr');
   li.setAttribute('class', 'law');
 
-  CONTRACT.methods.read_law(lawnum).call().then( function( law_value ){
-    li.textContent = law_value;
+  law_value = get_law(lawnum).then( (value) => { return value; });
+  law_value.then(function (value){
+    li.textContent = value;
     document.getElementById("parent").appendChild(li);
     document.getElementById("parent").appendChild(hr);
+    
   });
 }
 
-function getArticleName(articlenum){
-  CONTRACT.methods.LRK_ARTICLES(articlenum).call().then( function( article_name ) { 
-    console.log(article_name);
-  });
+function get_article_name(articlenum){
+  let article_name = CONTRACT.methods.LRK_ARTICLES(articlenum).call().then( (value) => { return value; });
+  return article_name;
 }
 
-function getArticleRange(articlenum){
+function get_law(lawnum){
+  let law_value = CONTRACT.methods.read_law(lawnum).call().then( (value) => { return value; });
+  return law_value;
+}
+
+function get_total_laws(){
+  let law_count = CONTRACT.methods.get_total_laws_count().call().then( (value) => { return value; });
+  return law_count;
+}
+
+function get_article_range(articlenum){
+  let start = CONTRACT.methods.get_article_range(articlenum).call().then( ( value ) => { return value; });
+  return start;
+/*
   CONTRACT.methods.get_article_range(articlenum).call().then( function( result ){
-    //console.log(result[0]);
+    console.log(result[1]);
     //return result;
   });
+  */
 }
-
 
 // SC Publish date
 (function () {
