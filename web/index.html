@@ -116,11 +116,31 @@
       Žmonės, kurie įamžino savo crypto pinigines:
     </div>
 
-    <center><button type="button" class="btn btn-outline-success" onclick="contribute_to_the_project()">Registruoti mano piniginę</button></center>
+    <center>
+<div class="form-floating">
+  <input class="form-control" id="amount" placeholder="0.01 BNB">
+</div>
+      <button type="button" class="btn btn-outline-success" onclick="contribute_to_the_project()">Registruoti mano piniginę</button>
+    </center>
 
-    <div id="donated"></div>
-
-    <img src="https://robohash.org/0xF1567A1d334d0aBcEcF52AfBD49cfBDd5A781f1a.png?set=set1&size=32x32" onerror="this.style.display='none'">
+        <table class="table table-hover">
+        <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><img id="user00" src=""></th>
+      <td><span id="user01"></td>
+      <td><span id="user02"></td>
+      <td><span id="user03"></td>
+    </tr>
+      </tbody>
+    </table>
     
     <h6><span class="text-right text-secondary" id="screleasedate"></h6> 
     <h6><span class="text-right text-secondary font-italic" id="authors"></span></h6>    
