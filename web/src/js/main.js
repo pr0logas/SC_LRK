@@ -78,38 +78,58 @@ web3.eth.getAccounts(function(err, accounts) {
 })();
 
 // LAWS
-(function () {
-  get_article_range(1).then()
+(async () => {
+
+    for (let i = 0; i <= 14; i++) {
+      await add_article(i);
+      let article_range = await get_article_range(i+1);
+
+        let law_start = article_range[0];
+        let law_end = article_range[1];
+        console.log(law_start, law_end);
+        for (let j = law_start; j <= law_end; j++) {
+          await add_law(j);
+        };
+      
+      
 
 
-
-  total_laws = get_total_laws().then( (value) => { return value; });
-  total_laws.then(function (value){
-
-    for (let i = 1; i <= 15; i++) {
-      //article_name = get_article_name(i);
-
-      add_law(i);
+      //console.log(article_range[0]);
+      //await add_law(i);
     };
-  });
+    
+  //});
 })();
 
+function add_article(articlenum) {
+  return new Promise(function(resolve){
+    var h3 = document.createElement('h3');
+    var hr = document.createElement('hr');
 
-function populate_articles_laws(argumentas){
-  console.log(argumentas);
+    h3.setAttribute('class', 'article');
+    article_value = get_article_name(articlenum).then( (value) => { return value; });
+    article_value.then(function (value){
+      h3.textContent = value;
+      document.getElementById("article").appendChild(h3);
+      document.getElementById("article").appendChild(hr);
+      resolve();
+    });
+  });
 }
 
 function add_law(lawnum) {
-  var li = document.createElement('li');
-  var hr = document.createElement('hr');
-  li.setAttribute('class', 'law');
+  return new Promise(function(resolve){
+    var li = document.createElement('li');
+    var hr = document.createElement('hr');
 
-  law_value = get_law(lawnum).then( (value) => { return value; });
-  law_value.then(function (value){
-    li.textContent = value;
-    document.getElementById("parent").appendChild(li);
-    document.getElementById("parent").appendChild(hr);
-    
+    li.setAttribute('class', 'law');
+    law_value = get_law(lawnum).then( (value) => { return value; });
+    law_value.then(function (value){
+      li.textContent = value;
+      document.getElementById("article").appendChild(li);
+      document.getElementById("article").appendChild(hr);
+      resolve();
+    });
   });
 }
 
@@ -128,16 +148,23 @@ function get_total_laws(){
   return law_count;
 }
 
+//function get_article_range(articlenum){
+//  let start = CONTRACT.methods.get_article_range(articlenum).call().then( ( value ) => { return value; });
+//  return start;
+//}
+
 function get_article_range(articlenum){
   let start = CONTRACT.methods.get_article_range(articlenum).call().then( ( value ) => { return value; });
-  return start;
+  return(Promise.resolve(start));
+}
+
 /*
   CONTRACT.methods.get_article_range(articlenum).call().then( function( result ){
     console.log(result[1]);
     //return result;
   });
   */
-}
+
 
 // SC Publish date
 (function () {
