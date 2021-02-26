@@ -1,4 +1,4 @@
-var CONTRACT_ADDRESS = '0x6212c03127B1d0a99CC71431d6C0aD0290D61579';
+var CONTRACT_ADDRESS = '0x569107E9Ca94217A2349cE2601eD28Fdd81ea6d7';
 var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"uint256","name":"date","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SubscribeDonatedPeople","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"donated_people","outputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"timestamp","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"get_article_range","outputs":[{"internalType":"uint8","name":"_start","type":"uint8"},{"internalType":"uint8","name":"_end","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"how_many_people_donated","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"LRK_ARTICLES","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"OWNER","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_law","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
 
 // web3 provider with fallback for old version
@@ -79,29 +79,38 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // LAWS
 (async () => {
+  CONTRACT.methods.LITHUANIAN_ROOTS_INFO().call().then( function( roots ) { 
+    console.log(roots);
+    add_law_custom_text(roots, "intro", "roots");
+  });
 
-    for (let i = 0; i <= 14; i++) {
-      await add_article(i);
-      let article_range = await get_article_range(i+1);
 
-        let law_start = article_range[0];
-        let law_end = article_range[1];
-        console.log(law_start, law_end);
-        for (let j = law_start; j <= law_end; j++) {
-          await add_law(j);
+    for (let i = 0; i <= 1; i++) {
+      await add_article(i, "laws", "law");
+      let article_range = await get_article_range(i);
+      let law_start = article_range[0];
+      let law_end = article_range[1];
+
+      for (let j = law_start; j <= law_end; j++) {
+        if (j == 155){
+          break;
+        }
+        await add_law(j, "laws", "law");
+      };
+
+      // DIRTY HACK
+      // 7th ARTICLE DOES NOT WORK IN LOOP (???)
+      if (i == 6){
+        for (let k = 91; k <= 101; k++) {
+          await add_law(k, "laws", "law");
         };
-      
-      
-
-
-      //console.log(article_range[0]);
-      //await add_law(i);
+      }
     };
-    
-  //});
+    await add_law(155, "outro", "outro");
+
 })();
 
-function add_article(articlenum) {
+function add_article(articlenum, location) {
   return new Promise(function(resolve){
     var h3 = document.createElement('h3');
     var hr = document.createElement('hr');
@@ -110,26 +119,38 @@ function add_article(articlenum) {
     article_value = get_article_name(articlenum).then( (value) => { return value; });
     article_value.then(function (value){
       h3.textContent = value;
-      document.getElementById("article").appendChild(h3);
-      document.getElementById("article").appendChild(hr);
+      document.getElementById(location).appendChild(h3);
+      document.getElementById(location).appendChild(hr);
       resolve();
     });
   });
 }
 
-function add_law(lawnum) {
+function add_law(lawnum, location, class_id) {
   return new Promise(function(resolve){
     var li = document.createElement('li');
     var hr = document.createElement('hr');
 
-    li.setAttribute('class', 'law');
+    li.setAttribute('class', class_id);
     law_value = get_law(lawnum).then( (value) => { return value; });
     law_value.then(function (value){
       li.textContent = value;
-      document.getElementById("article").appendChild(li);
-      document.getElementById("article").appendChild(hr);
+      document.getElementById(location).appendChild(li);
+      document.getElementById(location).appendChild(hr);
       resolve();
     });
+  });
+}
+
+function add_law_custom_text(text, location, class_id){
+  return new Promise(function(resolve){
+    var p = document.createElement('p');
+
+    p.setAttribute('class', class_id);
+    p.textContent = text;
+    document.getElementById(location).appendChild(p);
+    resolve();
+    //});
   });
 }
 

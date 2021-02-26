@@ -16,7 +16,7 @@ contract LRK {
     mapping(uint256 => DonatedPeople) public donated_people;
     uint256 public how_many_people_donated = 0;
 
-    string[15] public LRK_ARTICLES = [
+    string[16] public LRK_ARTICLES = [
         "",
         hex"4920534b4952534e49533a204c49455455564f532056414c53545942c496",
         hex"494920534b4952534e49533a20c5bd4d4f4755532049522056414c53545942c496",
