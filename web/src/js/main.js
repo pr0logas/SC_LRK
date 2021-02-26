@@ -79,14 +79,13 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // LAWS
 (async () => {
+
   CONTRACT.methods.LITHUANIAN_ROOTS_INFO().call().then( function( roots ) { 
-    console.log(roots);
     add_law_custom_text(roots, "intro", "roots");
   });
 
-
-    for (let i = 0; i <= 1; i++) {
-      await add_article(i, "laws", "law");
+    for (let i = 0; i <= 15; i++) {
+      await add_article(i, "laws", "article", "article");
       let article_range = await get_article_range(i);
       let law_start = article_range[0];
       let law_end = article_range[1];
@@ -100,22 +99,22 @@ web3.eth.getAccounts(function(err, accounts) {
 
       // DIRTY HACK
       // 7th ARTICLE DOES NOT WORK IN LOOP (???)
-      if (i == 6){
+      if (i == 7){
         for (let k = 91; k <= 101; k++) {
           await add_law(k, "laws", "law");
         };
       }
     };
     await add_law(155, "outro", "outro");
-
+    document.getElementById("loading").style.display = "none";
 })();
 
-function add_article(articlenum, location) {
+function add_article(articlenum, location, class_id) {
   return new Promise(function(resolve){
     var h3 = document.createElement('h3');
     var hr = document.createElement('hr');
 
-    h3.setAttribute('class', 'article');
+    h3.setAttribute('class', class_id);
     article_value = get_article_name(articlenum).then( (value) => { return value; });
     article_value.then(function (value){
       h3.textContent = value;
@@ -169,22 +168,10 @@ function get_total_laws(){
   return law_count;
 }
 
-//function get_article_range(articlenum){
-//  let start = CONTRACT.methods.get_article_range(articlenum).call().then( ( value ) => { return value; });
-//  return start;
-//}
-
 function get_article_range(articlenum){
   let start = CONTRACT.methods.get_article_range(articlenum).call().then( ( value ) => { return value; });
   return(Promise.resolve(start));
 }
-
-/*
-  CONTRACT.methods.get_article_range(articlenum).call().then( function( result ){
-    console.log(result[1]);
-    //return result;
-  });
-  */
 
 
 // SC Publish date
@@ -237,3 +224,4 @@ function format_wei_to_full_num(wei) {
   let full_num = finney / 1000; // 1 ETH or BNB
   return full_num;
 }
+

@@ -31,7 +31,9 @@
         white-space: pre-line;
         font-style: italic;
       }
-
+      .article {
+        font-size: 24px;
+      }
       .law {
         white-space: pre-line;
       }
@@ -44,10 +46,34 @@
         white-space: pre-line;
       }
 
+      #loading {
+        width: 0%;
+        height: 0%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: block;
+        opacity: 1;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+      }
+
+      #loading-image {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 100;
+      }
+      
+
     </style>
   </head>
 
   <body class="container">
+    <div id="loading">
+      <img id="loading-image" alt="Kraunasi..." />
+    </div>
 
     <h6 class="clientWalletAddrPostition"><span id="client_Account"></span></h6>
 
@@ -96,5 +122,5 @@
     <script src="src/js/web3.min.js"></script>  
     <script src="src/js/main.js"></script>     
 
-  </body>
+  </body>  
 </html>
