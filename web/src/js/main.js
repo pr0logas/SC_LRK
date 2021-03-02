@@ -66,16 +66,16 @@ web3.eth.getAccounts(function(err, accounts) {
 })();
 
 
-// Donated People
+// Donators
 (function () {
 
-  CONTRACT.methods.donated_people(4).call().then( function( donated ) { 
-    console.log(donated)
-    robohash = `https://robohash.org/` + donated.addr + `.png?set=set1&size=24x24`
+  CONTRACT.methods.donators(4).call().then( function( dict ) { 
+    console.log(dict)
+    robohash = `https://robohash.org/` + dict.addr + `.png?set=set1&size=24x24`
     $("#user00").attr("src",robohash);
-    $("#user01").text(donated.addr);
-    $("#user02").text(format_date(donated.timestamp));
-    $("#user03").text(format_wei_to_full_num(donated.amount) + ' BNB');
+    $("#user01").text(dict.addr);
+    $("#user02").text(format_date(dict.timestamp));
+    $("#user03").text(format_wei_to_full_num(dict.amount) + ' BNB');
 
   });
 })();
