@@ -14,17 +14,14 @@ if (window.ethereum) {
   }
 }
 else if (window.web3) {
-  window.web3 = new Web3(window.web3.currentProvider || 
-    new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org') || 
-    new Web3.providers.HttpProvider('seed.lietuvos-respublikos-konstitucija.crypto') ||
-    new Web3.providers.HttpProvider('https://data-seed-prebsc-1-s1.binance.org:8545'));
-    
+  window.web3 = new Web3(window.web3.currentProvider);
   // no need to ask for permission
 }
 else {
-  window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+  window.web3 = new Web3(new Web3.providers.HttpProvider("https://data-seed-prebsc-1-s1.binance.org:8545") ||
+    new Web3(new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org")) ||
+    new Web3(new Web3.providers.HttpProvider("seed.lietuvos-respublikos-konstitucija.crypto")));
 }
-console.log (window.web3.currentProvider)
 
 CONTRACT = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
@@ -33,16 +30,19 @@ var client_account;
 
 web3.eth.getAccounts(function(err, accounts) {
   if (err != null) {
-    alert("Error retrieving accounts.");
+    //alert("Error retrieving accounts.");
     return;
   }
   if (accounts.length == 0) {
-    alert("No client_account found! Make sure the Ethereum client is configured properly.");
+    //alert("No client_account found! Make sure the Ethereum client is configured properly.");
     return;
   }
-  client_account = accounts[0];
-  document.getElementById('client_Account').innerHTML = client_account;
-  web3.eth.defaultAccount = client_account;
+
+  else if (accounts.length >= 1) {
+    client_account = accounts[0];
+    document.getElementById('client_Account').innerHTML = client_account;
+    web3.eth.defaultAccount = client_account;
+  } 
 });
 
 
@@ -71,7 +71,7 @@ web3.eth.getAccounts(function(err, accounts) {
 // Donators
 (function () {
 
-  CONTRACT.methods.donators(4).call().then( function( dict ) { 
+  CONTRACT.methods.donators(1).call().then( function( dict ) { 
     robohash = `https://robohash.org/` + dict.addr + `.png?set=set1&size=24x24`
     $("#user00").attr("src",robohash);
     $("#user01").text(dict.addr);
@@ -101,8 +101,6 @@ web3.eth.getAccounts(function(err, accounts) {
         await add_law(j, "laws", "law");
       };
 
-      // DIRTY HACK
-      // 7th ARTICLE DOES NOT WORK IN LOOP (???)
       if (i == 7){
         for (let k = 91; k <= 101; k++) {
           await add_law(k, "laws", "law");
@@ -153,7 +151,6 @@ function add_law_custom_text(text, location, class_id){
     p.textContent = text;
     document.getElementById(location).appendChild(p);
     resolve();
-    //});
   });
 }
 
