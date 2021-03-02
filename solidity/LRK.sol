@@ -1,5 +1,10 @@
 pragma solidity >=0.7.0 <0.8.6;
 
+/*
+Tomas Andriekus
+Karolis Birgėla
+*/
+
 contract LRK_LAWS {
     function get_laws(uint8 number) public view returns(string memory) {}
 }
@@ -79,17 +84,13 @@ contract LRK {
         }
     }
 
-     // Returns the law range for the Nth article
     function get_article_range(uint8 _number) public view returns(uint8 _start, uint8 _end){
         _start = 1;
         
-        // This loop sums all law counts up to the Nth article, provided in _number to form the starting law number;
-        // It forms starting for listing laws, for example: input 3, result = 38, meaning 3rd article begins with 38th law;
         for (uint8 article = 0; article < _number; article++){
             _start = _start + LAW_COUNT_PER_ARTICLE[article];
         }
 
-        // Same loop as above, except it calculates the ending law number in the article, provided by _number;
         for (uint8 article = 0; article < _number + 1; article++){
             _end = _end + LAW_COUNT_PER_ARTICLE[article];
         }
@@ -124,12 +125,10 @@ contract LRK {
     }
     
     receive() external payable {
-        OWNER.transfer(msg.value);
         donated_people[how_many_people_donated+1] = DonatedPeople(msg.sender, block.timestamp, msg.value);
         how_many_people_donated++;
         emit SubscribeDonatedPeople(msg.sender, block.timestamp, msg.value);
     }
-
 
     modifier is_owner() {
         require(msg.sender == OWNER, "Caller is not smart contract owner");
