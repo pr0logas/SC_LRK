@@ -67,7 +67,8 @@ web3.eth.getAccounts(function(err, accounts) {
 // Donated People
 (function () {
 
-  CONTRACT.methods.donated_people(1).call().then( function( donated ) { 
+  CONTRACT.methods.donated_people(4).call().then( function( donated ) { 
+    console.log(donated)
     robohash = `https://robohash.org/` + donated.addr + `.png?set=set1&size=24x24`
     $("#user00").attr("src",robohash);
     $("#user01").text(donated.addr);
@@ -183,23 +184,16 @@ function get_article_range(articlenum){
 
 // Donation
 function contribute_to_the_project() {
-  var amount = document.getElementById('amount');
-
-  console.log(amount);
-
-  if (amount <= 0) {
-    alert("Nurodytas tuščias arba netinkamas skaičius?",amount);
-
-  } else {
-    CONTRACT.methods.OWNER().call().then( function(scauthors) {
-      const amount = "0.0004"; 
-      const amountToSend = web3.utils.toWei(amount, "ether"); // Convert to wei value
-      web3.eth.sendTransaction({ from:client_account,to:scauthors, value:amountToSend }).then( function(tx) { ;
-      console.log("Transaction: ", tx); 
-      });
-    });
-  };
-};
+  const amount = "0.0004"; 
+  const amountToSend = web3.utils.toWei(amount, "ether"); // Convert to wei value
+  web3.eth.sendTransaction({ 
+    from: client_account,
+    to: CONTRACT.options.address, 
+    value: amountToSend 
+  }).then( function(tx) { ;
+  console.log("Transaction: ", tx); 
+  });
+}
 
 function format_date(timestamp) {
   let a = new Date(timestamp * 1000);
