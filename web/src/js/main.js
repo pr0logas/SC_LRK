@@ -70,13 +70,14 @@ web3.eth.getAccounts(function(err, accounts) {
   CONTRACT.methods.donated_people(4).call().then( function( donated ) { 
     console.log(donated)
     robohash = `https://robohash.org/` + donated.addr + `.png?set=set1&size=24x24`
-    $("#user00").attr("src",robohash);
-    $("#user01").text(donated.addr);
-    $("#user02").text(format_date(donated.timestamp));
-    $("#user03").text(format_wei_to_full_num(donated.amount) + ' BNB');
+    $("#donator_robo").attr("src",robohash);
+    $("#donator_addr").text(donated.addr);
+    $("#donated_date").text(format_date(donated.timestamp));
+    $("#donated_amount").text(format_wei_to_full_num(donated.amount) + ' BNB');
 
   });
 })();
+
 
 // LAWS
 (async () => {
@@ -85,7 +86,7 @@ web3.eth.getAccounts(function(err, accounts) {
     add_law_custom_text(roots, "intro", "roots");
   });
 
-    for (let i = 0; i <= 15; i++) {
+    for (let i = 12; i <= 12 ; i++) {
       await add_article(i, "laws", "article", "article");
       let article_range = await get_article_range(i);
       let law_start = article_range[0];
@@ -108,6 +109,18 @@ web3.eth.getAccounts(function(err, accounts) {
     };
     await add_law(155, "outro", "outro");
     document.getElementById("loading").style.display = "none";
+})();
+
+// DONATORS
+(async () => {
+  donator_count = await CONTRACT.methods.how_many_people_donated().call().then( function( donator_count ) { 
+    return donator_count;
+  });
+  for (i = 1; i <= donator_count; i++){
+    //console.log(i);
+    await add_donator(i);
+
+  }
 })();
 
 function add_article(articlenum, location, class_id) {
@@ -174,6 +187,29 @@ function get_article_range(articlenum){
   return(Promise.resolve(start));
 }
 
+function add_donator(donatorid){
+  return new Promise(function(resolve){
+
+    CONTRACT.methods.donated_people(donatorid).call().then( function( donator ) {
+      //console.log(donator);
+      robohash = `https://robohash.org/` + donator.addr + `.png?set=set1&size=24x24`
+
+      let table = document.getElementById("donator_table");
+      let row = document.getElementById("donator_row");
+      let clone = row.cloneNode(true);
+      clone.id = "donator_row" + donatorid;
+      console.log(clone);
+      table.appendChild(clone);
+
+      //$("#donator_robo").attr("src",robohash);
+      //$("#donator_addr").text(donator.addr);
+      //$("#donated_date").text(format_date(donator.timestamp));
+      //$("#donated_amount").text(format_wei_to_full_num(donator.amount) + ' BNB');
+
+    });
+    resolve();
+  });
+}
 
 // SC Publish date
 (function () {
