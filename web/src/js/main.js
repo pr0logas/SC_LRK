@@ -16,7 +16,9 @@ if (window.ethereum) {
 else if (window.web3) {
   window.web3 = new Web3(window.web3.currentProvider || 
     new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org') || 
-    new Web3.providers.HttpProvider('seed.lietuvos-respublikos-konstitucija.crypto');
+    new Web3.providers.HttpProvider('seed.lietuvos-respublikos-konstitucija.crypto') ||
+    new Web3.providers.HttpProvider('https://data-seed-prebsc-1-s1.binance.org:8545');
+    
   // no need to ask for permission
 }
 else {
