@@ -65,6 +65,7 @@ web3.eth.getAccounts(function(err, accounts) {
 
 
 // Donated People
+/*
 (function () {
 
   CONTRACT.methods.donated_people(4).call().then( function( donated ) { 
@@ -77,7 +78,7 @@ web3.eth.getAccounts(function(err, accounts) {
 
   });
 })();
-
+*/
 
 // LAWS
 (async () => {
@@ -119,6 +120,7 @@ web3.eth.getAccounts(function(err, accounts) {
   for (i = 1; i <= donator_count; i++){
     //console.log(i);
     await add_donator(i);
+
 
   }
 })();
@@ -192,19 +194,26 @@ function add_donator(donatorid){
 
     CONTRACT.methods.donated_people(donatorid).call().then( function( donator ) {
       //console.log(donator);
-      robohash = `https://robohash.org/` + donator.addr + `.png?set=set1&size=24x24`
+      robohash = `https://robohash.org/` + donator.addr + `.png?set=set1&size=36x36`
 
-      let table = document.getElementById("donator_table");
-      let row = document.getElementById("donator_row");
-      let clone = row.cloneNode(true);
-      clone.id = "donator_row" + donatorid;
-      console.log(clone);
-      table.appendChild(clone);
+      let table_body = document.getElementById("donator_table").getElementsByTagName('tbody')[0];
+      let new_row = table_body.insertRow();
+      new_row.id = 'row' + donatorid;
 
-      //$("#donator_robo").attr("src",robohash);
-      //$("#donator_addr").text(donator.addr);
-      //$("#donated_date").text(format_date(donator.timestamp));
-      //$("#donated_amount").text(format_wei_to_full_num(donator.amount) + ' BNB');
+      let donated_amount_cell = new_row.insertCell(0);
+      donated_amount_cell.innerHTML = format_wei_to_full_num(donator.amount) + ' BNB';
+      
+      let current_row = document.getElementById(new_row.id); 
+      let time_donated_cell = current_row.insertCell(0);
+      time_donated_cell.innerHTML = format_date(donator.timestamp);
+
+      let address_cell = current_row.insertCell(0);
+      address_cell.innerHTML = donator.addr;
+
+      let robo_cell = current_row.insertCell(0);
+      let img = document.createElement('img');
+      img.src = robohash;
+      robo_cell.innerHTML = "<img src='" + robohash + "' alt='loading...'/>";
 
     });
     resolve();
@@ -254,4 +263,3 @@ function format_wei_to_full_num(wei) {
   let full_num = finney / 1000; // 1 ETH or BNB
   return full_num;
 }
-

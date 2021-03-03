@@ -26,6 +26,10 @@
         list-style-type: none;
       }
 
+      #bootstrap-override td {
+        vertical-align: middle;
+      }
+
       .roots {
         font-size: 16px;
         white-space: pre-line;
@@ -65,12 +69,13 @@
         left: 0px;
         z-index: 100;
       }
+
       
 
     </style>
   </head>
 
-  <body class="container">
+  <body class="container" id="bootstrap-override">
     <div id="loading">
       <img id="loading-image" alt="Kraunasi..." />
     </div>
@@ -104,12 +109,7 @@
     </tr>
     </thead>
   <tbody>
-    <tr id="donator_row">
-      <th scope="row"><img id="donator_robo" src=""></th>
-      <td><span id="donator_addr"></td>
-      <td><span id="donated_date"></td>
-      <td><span id="donated_amount"></td>
-    </tr>
+    <tr id="donator_row"></tr>
   </tbody>
   </table>
 
