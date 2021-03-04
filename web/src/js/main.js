@@ -251,13 +251,18 @@ function run_the_engine(web3) {
 
 // Donation
 function contribute_to_the_project() {
-  const amount = "0.0004"; 
-  const amountToSend = defined_user_web3.utils.toWei(amount, "ether"); // Convert to wei value
-  web3.eth.sendTransaction({ 
-    from: defined_client_address,
-    to: CONTRACT.options.address, 
-    value: amountToSend 
-  }).then( function(tx) { ;
-  console.log("Transaction: ", tx); 
-  });
+  if (defined_client_address != undefined) {
+    const amount = "0.0004"; 
+    const amountToSend = defined_user_web3.utils.toWei(amount, "ether"); // Convert to wei value
+    web3.eth.sendTransaction({ 
+      from: defined_client_address,
+      to: CONTRACT.options.address, 
+      value: amountToSend 
+    }).then( function(tx) { ;
+    console.log("Transaction: ", tx); 
+    });
+
+  } else {
+    alert("You don't have Metamask or running not the BSC blockchain! Please ensure the requirements")
+  }
 }
