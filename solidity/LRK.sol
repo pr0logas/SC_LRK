@@ -1,5 +1,10 @@
 pragma solidity >=0.7.0 <0.8.6;
 
+/*
+Tomas Andriekus
+Karolis Birgėla
+*/
+
 contract LRK_LAWS {
     function get_laws(uint8 number) public view returns(string memory) {}
 }
@@ -13,8 +18,8 @@ contract LRK {
     string public constant LITHUANIA_FLAG = hex"646174613a696d6167652f706e673b6261736536342c6956424f5277304b47676f414141414e535568455567414141494141414143414341594141414444506d484c41414141426d4a4c5230514141414141414144355137742f414141414358424957584d41414133584141414e317746434b4a74344141414143585a7751576341414143414141414167414177345447614141414253556c45515652343275336473556b46515268473064336e4a494b5957494778594751726c6d4550566955595749476443412b4d316166575950516a3935774b50706962444f777932775941414141414141414141414141414d432f744a2b657278366d527a426e507a316666552b50594d3761746d326648734763772f51415a676b6754674278416f6754514a7741346751514a3441344163514a4945344163514b4945304363414f4945454365414f4148454353424f4148454369424e4133504a4a634e74362f7a79623373436764663936506232425165766c37584a36413450577476394d6232435157304363414f4945454365414f4148454353424f4148454369424e416e4144694242416e6744674278416b6754674278416f6754514a7741346751514a34413441635174727757307262766a782f5147427531504e37642b4441686246312f4f763277352f6a61336744674278416b6754674278416f6754514a7741346751514a3441344163514a4945344163514b4945304363414f4945454365414f4148454353424f414845436946736e43615374342f6e6863586f45414141414141414141414141414141413845652f3242385650426755547059414141416c6445565964474e795a5746305a53316b5958526c414449774d446b744d5449744d4468554d5449364d446b364d5467744d4463364d4444374636524d414141414a5852465748526b5958526c4f6d4e795a5746305a5141794d4445774c5441784c544578564441354f6a51334f6a457a4c5441334f6a417735776b6d3851414141435630525668305a4746305a547074623252705a6e6b414d6a41784d4330774d5330784d5651774f546f304e7a6f784d7930774e7a6f774d4a5a556e6b304141414179644556596445787059325675633255416148523063446f764c3256754c6e647061326c775a57527059533576636d637664326c726153395164574a7361574e665a47397459576c75502f33717a77414141435630525668306257396b61575a354c575268644755414d6a41774f5330784d6930774f4651784d6a6f774f546f784f4330774e7a6f774d4b536d306e67414141415a6445565964464e765a6e523359584a6c4148643364793570626d747a593246775a533576636d6562376a7761414141414748524657485254623356795932554156326c726157316c5a476c6849454e7662573176626e5053776c4f61414141414e6e524657485254623356795932566656564a4d41476830644841364c79396a623231746232357a4c6e647061326c745a57527059533576636d637664326c726153394e59576c75583142685a3255532f4263744141414141456c46546b5375516d4343";
     string public constant LRK_TITLE = hex"4c69657475766f73205265737075626c696b6f73204b6f6e737469747563696a61";
     string public constant SC_AUTHORS = hex"4b61726f6c69732042697267c4976c61202620546f6d617320416e647269656b7573";
-    mapping(uint256 => DonatedPeople) public donated_people;
-    uint256 public how_many_people_donated = 0;
+    mapping(uint256 => Donators) public donators;
+    uint256 public donators_count = 0;
 
     string[16] public LRK_ARTICLES = [
         "",
@@ -58,16 +63,15 @@ contract LRK {
     constructor() {
         OWNER = msg.sender;
         SMART_CONTRACT_RELEASE_BY_UNIXTIME = block.timestamp;
-        donated_people[0] = DonatedPeople(OWNER, SMART_CONTRACT_RELEASE_BY_UNIXTIME, 30000000000000000);
     }
     
-    struct DonatedPeople {
+    struct Donators {
         address addr;
         uint256 timestamp;
         uint256 amount;
     }
     
-    event SubscribeDonatedPeople(
+    event SubscribeDonators(
         address indexed user,
         uint256 indexed date,
         uint256 indexed amount
@@ -79,17 +83,13 @@ contract LRK {
         }
     }
 
-     // Returns the law range for the Nth article
     function get_article_range(uint8 _number) public view returns(uint8 _start, uint8 _end){
         _start = 1;
         
-        // This loop sums all law counts up to the Nth article, provided in _number to form the starting law number;
-        // It forms starting for listing laws, for example: input 3, result = 38, meaning 3rd article begins with 38th law;
         for (uint8 article = 0; article < _number; article++){
             _start = _start + LAW_COUNT_PER_ARTICLE[article];
         }
 
-        // Same loop as above, except it calculates the ending law number in the article, provided by _number;
         for (uint8 article = 0; article < _number + 1; article++){
             _end = _end + LAW_COUNT_PER_ARTICLE[article];
         }
@@ -124,12 +124,10 @@ contract LRK {
     }
     
     receive() external payable {
-        OWNER.transfer(msg.value);
-        donated_people[how_many_people_donated+1] = DonatedPeople(msg.sender, block.timestamp, msg.value);
-        how_many_people_donated++;
-        emit SubscribeDonatedPeople(msg.sender, block.timestamp, msg.value);
+        donators[donators_count+1] = Donators(msg.sender, block.timestamp, msg.value);
+        donators_count++;
+        emit SubscribeDonators(msg.sender, block.timestamp, msg.value);
     }
-
 
     modifier is_owner() {
         require(msg.sender == OWNER, "Caller is not smart contract owner");

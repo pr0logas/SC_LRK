@@ -1,5 +1,5 @@
-var CONTRACT_ADDRESS = '0x569107E9Ca94217A2349cE2601eD28Fdd81ea6d7';
-var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"uint256","name":"date","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SubscribeDonatedPeople","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"donated_people","outputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"timestamp","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"get_article_range","outputs":[{"internalType":"uint8","name":"_start","type":"uint8"},{"internalType":"uint8","name":"_end","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"how_many_people_donated","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"LRK_ARTICLES","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"OWNER","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_law","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
+var CONTRACT_ADDRESS = '0x054fd2FFd28bd6487a6f6F26dFcE996f4174d206';
+var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"uint256","name":"date","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SubscribeDonators","type":"event"},{"inputs":[],"name":"kill_sc","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"stateMutability":"payable","type":"receive"},{"inputs":[],"name":"CONSTITUTION_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint32","name":"","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"donators","outputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"timestamp","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"donators_count","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"get_article_range","outputs":[{"internalType":"uint8","name":"_start","type":"uint8"},{"internalType":"uint8","name":"_end","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"get_total_laws_count","outputs":[{"internalType":"uint8","name":"result","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIA_FLAG","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LITHUANIAN_ROOTS_INFO","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"LRK_ARTICLES","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LRK_TITLE","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"OWNER","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_number","type":"uint8"}],"name":"read_law","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SC_AUTHORS","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"SMART_CONTRACT_RELEASE_BY_UNIXTIME","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]');
 
 // web3 provider with fallback for old version
 if (window.ethereum) {
@@ -14,13 +14,14 @@ if (window.ethereum) {
   }
 }
 else if (window.web3) {
-  window.web3 = new Web3(window.web3.currentProvider || new Web3.providers.HttpProvider('http://localhost:8545'));
+  window.web3 = new Web3(window.web3.currentProvider);
   // no need to ask for permission
 }
 else {
-  window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+  window.web3 = new Web3(new Web3.providers.HttpProvider("https://data-seed-prebsc-1-s1.binance.org:8545") ||
+    new Web3(new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org")) ||
+    new Web3(new Web3.providers.HttpProvider("seed.lietuvos-respublikos-konstitucija.crypto")));
 }
-console.log (window.web3.currentProvider)
 
 CONTRACT = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
@@ -29,16 +30,19 @@ var client_account;
 
 web3.eth.getAccounts(function(err, accounts) {
   if (err != null) {
-    alert("Error retrieving accounts.");
+    //alert("Error retrieving accounts.");
     return;
   }
   if (accounts.length == 0) {
-    alert("No client_account found! Make sure the Ethereum client is configured properly.");
+    //alert("No client_account found! Make sure the Ethereum client is configured properly.");
     return;
   }
-  client_account = accounts[0];
-  document.getElementById('client_Account').innerHTML = client_account;
-  web3.eth.defaultAccount = client_account;
+
+  else if (accounts.length >= 1) {
+    client_account = accounts[0];
+    document.getElementById('client_Account').innerHTML = client_account;
+    web3.eth.defaultAccount = client_account;
+  } 
 });
 
 
@@ -64,22 +68,6 @@ web3.eth.getAccounts(function(err, accounts) {
 })();
 
 
-// Donated People
-/*
-(function () {
-
-  CONTRACT.methods.donated_people(4).call().then( function( donated ) { 
-    console.log(donated)
-    robohash = `https://robohash.org/` + donated.addr + `.png?set=set1&size=24x24`
-    $("#donator_robo").attr("src",robohash);
-    $("#donator_addr").text(donated.addr);
-    $("#donated_date").text(format_date(donated.timestamp));
-    $("#donated_amount").text(format_wei_to_full_num(donated.amount) + ' BNB');
-
-  });
-})();
-*/
-
 // LAWS
 (async () => {
 
@@ -100,8 +88,6 @@ web3.eth.getAccounts(function(err, accounts) {
         await add_law(j, "laws", "law");
       };
 
-      // DIRTY HACK
-      // 7th ARTICLE DOES NOT WORK IN LOOP (???)
       if (i == 7){
         for (let k = 91; k <= 101; k++) {
           await add_law(k, "laws", "law");
@@ -165,7 +151,6 @@ function add_law_custom_text(text, location, class_id){
     p.textContent = text;
     document.getElementById(location).appendChild(p);
     resolve();
-    //});
   });
 }
 
