@@ -26,6 +26,10 @@
         list-style-type: none;
       }
 
+      #bootstrap-override td {
+        vertical-align: middle;
+      }
+
       .roots {
         font-size: 16px;
         white-space: pre-line;
@@ -65,12 +69,13 @@
         left: 0px;
         z-index: 100;
       }
+
       
 
     </style>
   </head>
 
-  <body class="container">
+  <body class="container" id="bootstrap-override">
     <div id="loading">
       <img id="loading-image" alt="Kraunasi..." />
     </div>
@@ -94,25 +99,20 @@
       <button type="button" class="btn btn-outline-success" onclick="contribute_to_the_project()">Registruoti mano piniginę</button>
     </center>
 
-        <table class="table table-hover">
-        <thead>
+  <table class="table table-hover" id="donator_table">
+    <thead>
     <tr>
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
-  </thead>
+    </thead>
   <tbody>
-    <tr>
-      <th scope="row"><img id="user00" src=""></th>
-      <td><span id="user01"></td>
-      <td><span id="user02"></td>
-      <td><span id="user03"></td>
-    </tr>
-      </tbody>
-    </table>
-    
+    <tr id="donator_row"></tr>
+  </tbody>
+  </table>
+
     <h6><span class="text-right text-secondary" id="screleasedate"></h6> 
     <h6><span class="text-right text-secondary font-italic" id="authors"></span></h6>    
   

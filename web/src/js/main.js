@@ -68,19 +68,6 @@ web3.eth.getAccounts(function(err, accounts) {
 })();
 
 
-// Donators
-(function () {
-
-  CONTRACT.methods.donators(1).call().then( function( dict ) { 
-    robohash = `https://robohash.org/` + dict.addr + `.png?set=set1&size=24x24`
-    $("#user00").attr("src",robohash);
-    $("#user01").text(dict.addr);
-    $("#user02").text(format_date(dict.timestamp));
-    $("#user03").text(format_wei_to_full_num(dict.amount) + ' BNB');
-
-  });
-})();
-
 // LAWS
 (async () => {
 
@@ -88,7 +75,7 @@ web3.eth.getAccounts(function(err, accounts) {
     add_law_custom_text(roots, "intro", "roots");
   });
 
-    for (let i = 0; i <= 15; i++) {
+    for (let i = 12; i <= 12 ; i++) {
       await add_article(i, "laws", "article", "article");
       let article_range = await get_article_range(i);
       let law_start = article_range[0];
@@ -109,6 +96,19 @@ web3.eth.getAccounts(function(err, accounts) {
     };
     await add_law(155, "outro", "outro");
     document.getElementById("loading").style.display = "none";
+})();
+
+// DONATORS
+(async () => {
+  donator_count = await CONTRACT.methods.how_many_people_donated().call().then( function( donator_count ) { 
+    return donator_count;
+  });
+  for (i = 1; i <= donator_count; i++){
+    //console.log(i);
+    await add_donator(i);
+
+
+  }
 })();
 
 function add_article(articlenum, location, class_id) {
@@ -174,6 +174,36 @@ function get_article_range(articlenum){
   return(Promise.resolve(start));
 }
 
+function add_donator(donatorid){
+  return new Promise(function(resolve){
+
+    CONTRACT.methods.donated_people(donatorid).call().then( function( donator ) {
+      //console.log(donator);
+      robohash = `https://robohash.org/` + donator.addr + `.png?set=set1&size=36x36`
+
+      let table_body = document.getElementById("donator_table").getElementsByTagName('tbody')[0];
+      let new_row = table_body.insertRow();
+      new_row.id = 'row' + donatorid;
+
+      let donated_amount_cell = new_row.insertCell(0);
+      donated_amount_cell.innerHTML = format_wei_to_full_num(donator.amount) + ' BNB';
+      
+      let current_row = document.getElementById(new_row.id); 
+      let time_donated_cell = current_row.insertCell(0);
+      time_donated_cell.innerHTML = format_date(donator.timestamp);
+
+      let address_cell = current_row.insertCell(0);
+      address_cell.innerHTML = donator.addr;
+
+      let robo_cell = current_row.insertCell(0);
+      let img = document.createElement('img');
+      img.src = robohash;
+      robo_cell.innerHTML = "<img src='" + robohash + "' alt='loading...'/>";
+
+    });
+    resolve();
+  });
+}
 
 // SC Publish date
 (function () {
