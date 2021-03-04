@@ -4,6 +4,9 @@ var ABI = JSON.parse('[{"anonymous":false,"inputs":[{"indexed":true,"internalTyp
 // web3 provider with fallback for old version
 if (window.ethereum) {
   window.web3 = new Web3(window.ethereum)
+
+  web3.eth.net.getId().then((id) => (id == 97) ? console.log("Chain is good", id) : console.log("Warning! you are not on BSC blockhain"));
+
   try {
       // ask user for permission
       ethereum.enable()
@@ -40,11 +43,10 @@ web3.eth.getAccounts(function(err, accounts) {
 
   else if (accounts.length >= 1) {
     client_account = accounts[0];
-    document.getElementById('client_Account').innerHTML = client_account;
+    document.getElementById('client_account').innerHTML = client_account;
     web3.eth.defaultAccount = client_account;
   } 
 });
-
 
 // LRK Title
 (function () {
@@ -229,7 +231,7 @@ function format_date(timestamp) {
   let a = new Date(timestamp * 1000);
   let months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   let hours = ['00', '01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
-  let days = ['01','02','03','04','05','06','07','08','09','10','12','13','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']
+  let days = ['00', '01','02','03','04','05','06','07','08','09','10','12','13','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']
   let year = a.getFullYear();
   let month = months[a.getMonth()];
   let day = days[a.getDate()];
