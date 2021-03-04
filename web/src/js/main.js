@@ -100,7 +100,7 @@ web3.eth.getAccounts(function(err, accounts) {
 
 // DONATORS
 (async () => {
-  donator_count = await CONTRACT.methods.how_many_people_donated().call().then( function( donator_count ) { 
+  donator_count = await CONTRACT.methods.donators_count().call().then( function( donator_count ) { 
     return donator_count;
   });
   for (i = 1; i <= donator_count; i++){
@@ -177,7 +177,7 @@ function get_article_range(articlenum){
 function add_donator(donatorid){
   return new Promise(function(resolve){
 
-    CONTRACT.methods.donated_people(donatorid).call().then( function( donator ) {
+    CONTRACT.methods.donators(donatorid).call().then( function( donator ) {
       //console.log(donator);
       robohash = `https://robohash.org/` + donator.addr + `.png?set=set1&size=36x36`
 
