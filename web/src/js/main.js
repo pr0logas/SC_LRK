@@ -250,17 +250,31 @@ function run_the_engine(web3) {
   // Donation
 function contribute_to_the_project() {
   if (defined_client_address != undefined) {
-    const amount = "0.0004"; 
-    const amountToSend = defined_user_web3.utils.toWei(amount, "ether"); // Convert to wei value
-    web3.eth.sendTransaction({ 
-      from: defined_client_address,
-      to: CONTRACT.options.address, 
-      value: amountToSend 
-    }).then( function(tx) { ;
-    console.log("Transaction: ", tx); 
-    });
+    let amount;
+    amount = amount_validation()
+
+    if (amount != undefined) {
+      const amountToSend = defined_user_web3.utils.toWei(amount, "ether"); // Convert to wei value
+      web3.eth.sendTransaction({ 
+        from: defined_client_address,
+        to: CONTRACT.options.address, 
+        value: amountToSend 
+      }).then( function(tx) { ;
+      console.log("Transaction: ", tx); 
+      });
+
+    } else {
+      alert("Jūsų nurodyta suma nėra validi. Prašome peržiūrėti ar nurodėte tinkamus skaičius!")
+    }
 
   } else {
-    alert("You don't have Metamask or running not the BSC blockchain! Please ensure the requirements")
+    alert("Jūs neturite susidiegę 'Metamask' įskiepio arba naudojate ne 'BSC blockchain'")
+  }
+}
+
+function amount_validation() {
+  user_input_amount = $("#amount").val();
+  if (user_input_amount > 0) {
+    return user_input_amount
   }
 }
