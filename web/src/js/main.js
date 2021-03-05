@@ -268,7 +268,7 @@ function contribute_to_the_project() {
     }
 
   } else {
-    alert("Jūs neturite susidiegę 'Metamask' įskiepio arba naudojate ne 'BSC blockchain'")
+    alert("Jūs neturite susidiegę 'Metamask' įskiepio arba naudojate ne 'Binance Smart Chain'")
   }
 }
 
