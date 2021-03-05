@@ -273,8 +273,10 @@ function contribute_to_the_project() {
 }
 
 function amount_validation() {
-  user_input_amount = $("#amount").val();
-  if (user_input_amount > 0) {
+  let value = $("#amount").val();
+  let user_input_amount = parseFloat(value).toFixed(12);
+  console.log(user_input_amount)
+  if (user_input_amount > 0 && user_input_amount < 9007199254740992) {
     return user_input_amount
   }
 }
