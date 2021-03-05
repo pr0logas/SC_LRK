@@ -9,6 +9,7 @@ const PROVIDERS = [
 var defined_user_web3;
 var defined_client_address;
 
+
 if (window.ethereum) {
   window.web3 = new Web3(window.ethereum)
 
@@ -112,9 +113,8 @@ function run_the_engine(web3) {
 
   // DONATORS
   (async () => {
-    donator_count = await CONTRACT.methods.donators_count().call().then( function( donator_count ) { 
-      return donator_count;
-    });
+
+    donator_count = await get_donator_count();
 
     for (i = donator_count; i >= 1; i--){
       donator_data = await get_donator_data(i);
@@ -188,7 +188,11 @@ function run_the_engine(web3) {
   }
 
 
-  // Get Donator Info
+  function get_donator_count() {
+    let donator_count = CONTRACT.methods.donators_count().call().then( ( value ) => { return value; });
+    return(Promise.resolve(donator_count));
+  }
+
   function get_donator_data(donatorid) {
     let donator_data = CONTRACT.methods.donators(donatorid).call().then( ( value ) => { return value; });
     return(Promise.resolve(donator_data));
@@ -216,7 +220,7 @@ function run_the_engine(web3) {
         let robo_cell = current_row.insertCell(0);
         let img = document.createElement('img');
         img.src = robohash;
-        robo_cell.innerHTML = "<img src='" + robohash + "' alt='loading...'/>";
+        robo_cell.innerHTML = "<img src='" + robohash + "' onerror=\"this.style.display=\'none\'\"/>";
 
       resolve();
     });
@@ -253,7 +257,6 @@ function run_the_engine(web3) {
     let full_num = finney / 1000; // 1 ETH or BNB
     return full_num;
   }
-
 }
 
   // Donation
@@ -269,7 +272,8 @@ function contribute_to_the_project() {
         to: CONTRACT.options.address, 
         value: amountToSend 
       }).then( function(tx) {
-      console.log("Transaction: ", tx.status); 
+      console.log("Transaction completed: ", tx.status);
+
       });
 
     } else {
@@ -288,3 +292,12 @@ function amount_validation() {
     return user_input_amount
   }
 }
+
+function refresh_donator_table(tx_completed){
+  if (tx_completed == true){
+    console.log(tx_completed);
+    $( "#donator_table_div" ).load( "../../index.html #donator_table_div" );
+  }
+}
+
+
