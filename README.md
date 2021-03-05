@@ -10,6 +10,8 @@
 | 4              | Rinkeby                                    |
 | 5              | Goerli                                     |
 | 42             | Kovan                                      |
+| 56             | Binance Smart Chain                        |
+| 97             | BSC Testnet                                |
 | 1337           | Geth private chains (default)              |
 
 
