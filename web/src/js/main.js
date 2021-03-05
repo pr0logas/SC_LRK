@@ -71,11 +71,13 @@ web3.eth.getAccounts(function(err, accounts) {
 // LAWS
 (async () => {
 
+
   CONTRACT.methods.LITHUANIAN_ROOTS_INFO().call().then( function( roots ) { 
     add_law_custom_text(roots, "intro", "roots");
   });
+  
 
-    for (let i = 12; i <= 12 ; i++) {
+    for (let i = 15; i <= 15 ; i++) {
       await add_article(i, "laws", "article", "article");
       let article_range = await get_article_range(i);
       let law_start = article_range[0];
@@ -94,8 +96,8 @@ web3.eth.getAccounts(function(err, accounts) {
         };
       }
     };
-    await add_law(155, "outro", "outro");
-    document.getElementById("loading").style.display = "none";
+    await add_law(155, "outro", "outro"); 
+    document.getElementById("loader").style.display = "none";
 })();
 
 // DONATORS
@@ -104,10 +106,7 @@ web3.eth.getAccounts(function(err, accounts) {
     return donator_count;
   });
   for (i = 1; i <= donator_count; i++){
-    //console.log(i);
     await add_donator(i);
-
-
   }
 })();
 
@@ -198,8 +197,7 @@ function add_donator(donatorid){
       let robo_cell = current_row.insertCell(0);
       let img = document.createElement('img');
       img.src = robohash;
-      robo_cell.innerHTML = "<img src='" + robohash + "' alt='loading...'/>";
-
+      robo_cell.innerHTML = "<img src='" + robohash + "' onerror=\"this.style.display=\'none\'\"'/>";
     });
     resolve();
   });
