@@ -115,9 +115,13 @@ function run_the_engine(web3) {
     donator_count = await CONTRACT.methods.donators_count().call().then( function( donator_count ) { 
       return donator_count;
     });
-    for (i = 1; i <= donator_count; i++){
-      await add_donator(i);
+
+    for (i = donator_count; i >= 1; i--){
+      donator_data = await get_donator_data(i);
+      //await add_donator(i);
+      await add_donator(i, donator_data);
     }
+    
   })();
 
   function add_article(articlenum, location, class_id) {
@@ -183,33 +187,37 @@ function run_the_engine(web3) {
     return(Promise.resolve(start));
   }
 
-  function add_donator(donatorid){
+
+  // Get Donator Info
+  function get_donator_data(donatorid) {
+    let donator_data = CONTRACT.methods.donators(donatorid).call().then( ( value ) => { return value; });
+    return(Promise.resolve(donator_data));
+  }
+
+  function add_donator(id, donator_data){
     return new Promise(function(resolve){
 
-      CONTRACT.methods.donators(donatorid).call().then( function( donator ) {
-        //console.log(donator);
-        robohash = `https://robohash.org/` + donator.addr + `.png?set=set1&size=36x36`
+        robohash = `https://robohash.org/` + donator_data.addr + `.png?set=set1&size=36x36`
 
         let table_body = document.getElementById("donator_table").getElementsByTagName('tbody')[0];
         let new_row = table_body.insertRow();
-        new_row.id = 'row' + donatorid;
+        new_row.id = 'row' + id;
 
         let donated_amount_cell = new_row.insertCell(0);
-        donated_amount_cell.innerHTML = format_wei_to_full_num(donator.amount) + ' BNB';
+        donated_amount_cell.innerHTML = format_wei_to_full_num(donator_data.amount) + ' BNB';
         
         let current_row = document.getElementById(new_row.id); 
         let time_donated_cell = current_row.insertCell(0);
-        time_donated_cell.innerHTML = format_date(donator.timestamp);
+        time_donated_cell.innerHTML = format_date(donator_data.timestamp);
 
         let address_cell = current_row.insertCell(0);
-        address_cell.innerHTML = donator.addr;
+        address_cell.innerHTML = donator_data.addr;
 
         let robo_cell = current_row.insertCell(0);
         let img = document.createElement('img');
         img.src = robohash;
         robo_cell.innerHTML = "<img src='" + robohash + "' alt='loading...'/>";
 
-      });
       resolve();
     });
   }
@@ -245,6 +253,7 @@ function run_the_engine(web3) {
     let full_num = finney / 1000; // 1 ETH or BNB
     return full_num;
   }
+
 }
 
   // Donation
