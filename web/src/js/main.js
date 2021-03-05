@@ -243,7 +243,8 @@ function run_the_engine(web3) {
     let szabo = gwei / 1000;
     let finney = szabo / 1000;
     let full_num = finney / 1000; // 1 ETH or BNB
-    return full_num;
+    let formated_num = parseFloat(full_num).toFixed(8);
+    return formated_num.toString()
   }
 }
 
