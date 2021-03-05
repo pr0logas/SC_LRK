@@ -8,6 +8,7 @@ const PROVIDERS = [
 ];
 var defined_user_web3;
 var defined_client_address;
+var donation_completed = false;
 
 
 if (window.ethereum) {
@@ -118,8 +119,7 @@ function run_the_engine(web3) {
 
     for (i = donator_count; i >= 1; i--){
       donator_data = await get_donator_data(i);
-      //await add_donator(i);
-      await add_donator(i, donator_data);
+      await add_donator(i, donator_data, false);
     }
     
   })();
@@ -198,13 +198,19 @@ function run_the_engine(web3) {
     return(Promise.resolve(donator_data));
   }
 
-  function add_donator(id, donator_data){
+  function add_donator(id, donator_data, from_start){
     return new Promise(function(resolve){
 
         robohash = `https://robohash.org/` + donator_data.addr + `.png?set=set1&size=36x36`
 
         let table_body = document.getElementById("donator_table").getElementsByTagName('tbody')[0];
-        let new_row = table_body.insertRow();
+
+        if (from_start == true){
+          var new_row = table_body.insertRow(0);
+        } else {
+          var new_row = table_body.insertRow();
+        }
+
         new_row.id = 'row' + id;
 
         let donated_amount_cell = new_row.insertCell(0);
@@ -258,6 +264,15 @@ function run_the_engine(web3) {
     let formated_num = parseFloat(full_num).toFixed(8);
     return formated_num.toString()
   }
+
+  setInterval(async function(){
+    if (donation_completed == true){
+      latest_donator_id = await get_donator_count();
+      latest_donator_data = await get_donator_data(latest_donator_id);
+      await add_donator(latest_donator_id, latest_donator_data, true);
+      donation_completed = false;
+    }
+  }, 5000);
 }
 
   // Donation
@@ -273,8 +288,8 @@ function contribute_to_the_project() {
         to: CONTRACT.options.address, 
         value: amountToSend 
       }).then( function(tx) {
-      console.log("Transaction completed: ", tx.status);
-
+      //console.log("Transaction completed: ", tx.status);
+      donation_completed = tx.status;
       });
 
     } else {
@@ -293,12 +308,3 @@ function amount_validation() {
     return user_input_amount
   }
 }
-
-function refresh_donator_table(tx_completed){
-  if (tx_completed == true){
-    console.log(tx_completed);
-    $( "#donator_table_div" ).load( "../../index.html #donator_table_div" );
-  }
-}
-
-
