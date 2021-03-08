@@ -110,14 +110,32 @@
         width: 50%;
         position: absolute;
       }
+
+      #progressBar {
+      width: 100%;
+      background-color: rgba(128, 128, 128, 0.2);
+      }
+
+      #bar {
+        width: 1%;
+        height: 30px;
+        background-color: green;
+      }
+
     </style>
   </head>
 
   <body class="container-custom" id="bootstrap-override">
     <h6 class="clientWalletAddrPostition"><span id="client_account"></span></h6>
     <div class="sidenav">
+      <!--
       <div id=loader>
         <p>Kraunasi...</p>
+      </div>
+      -->
+
+      <div id="progressBar">
+        <div id="bar"></div>
       </div>
       <h5>TURINYS</h5>
       <a href="#skirsnis1">I - LIETUVOS VALSTYBĖ</a>
@@ -136,17 +154,31 @@
       <a href="#skirsnis14">XIV - KONSTITUCIJOS KEITIMAS</a>
       <a href="#skirsnis15">BAIGIAMIEJI NUOSTATAI</a>
       <hr class="sidenavhr">
-      <a href="#donator_table">ĮSIAMŽINKITE</a>
+      <a href="#donators">ĮSIAMŽINKITE</a>
       
     </div>
 
     <center><h1 class="page-header"><span><img class="ltflag" src=""></span><span id="lrktitle"></span></h1></center>
 
     <p id="intro"></p>
-    <ol id="laws"></ol>
+    <ol id="article1"></ol>
+    <ol id="article2"></ol>
+    <ol id="article3"></ol>
+    <ol id="article4"></ol>
+    <ol id="article5"></ol>
+    <ol id="article6"></ol>
+    <ol id="article7"></ol>
+    <ol id="article8"></ol>
+    <ol id="article9"></ol>
+    <ol id="article10"></ol>
+    <ol id="article11"></ol>
+    <ol id="article12"></ol>
+    <ol id="article13"></ol>
+    <ol id="article14"></ol>
+    <ol id="article15"></ol>
     <p id="outro"></p>
 
-    <div class="alert alert-secondary text-center" role="alert">
+    <div class="alert alert-secondary text-center" role="alert" id="donators">
       Žmonės, kurie įamžino savo <a href="https://coinmarketcap.com/currencies/binance-coin/" target="_blank"><img src="https://cloudflare-ipfs.com/ipfs/QmZRoiuQ4LCStnpUnCoV7fk5bTuw8qDb5netAqGn3Ve3Hu" alt="bsc" width="16" height="16"> Binance Smart Chain</a> crypto pinigines:
     </div>
 

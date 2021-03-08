@@ -9,6 +9,7 @@ const PROVIDERS = [
 var defined_user_web3;
 var defined_client_address;
 var donation_completed = false;
+var progress = 0;
 
 
 if (window.ethereum) {
@@ -80,14 +81,12 @@ function run_the_engine(web3) {
   })();
 
 
-
-  // LAWS
+/*
+  // ARTICLE1
   (async () => {
-
     CONTRACT.methods.LITHUANIAN_ROOTS_INFO().call().then( function( roots ) { 
       add_law_custom_text(roots, "intro", "roots");
     });
-
       for (let i = 1; i <= 15 ; i++) {
         let article_id = "skirsnis" + i;
         await add_article(i, "laws", "article", article_id);
@@ -102,7 +101,6 @@ function run_the_engine(web3) {
           await add_law(j, "laws", "law");
         };
 
-
         if (i == 7){
           for (let k = 91; k <= 101; k++) {
             await add_law(k, "laws", "law");
@@ -112,17 +110,203 @@ function run_the_engine(web3) {
       await add_law(155, "outro", "outro");
       document.getElementById("loader").style.display = "none";
   })();
+  */
+
+  // ARTICLE1
+  (async () => {
+    await add_article(1, "article1", "article", "skirsnis1");
+    let article_range = await get_article_range(1);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article1", "law");
+    };
+  })();
+
+  // ARTICLE2
+  (async () => {
+    await add_article(2, "article2", "article", "skirsnis2");
+    let article_range = await get_article_range(2);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article2", "law");
+    };
+  })();
+
+  // ARTICLE3
+  (async () => {
+    await add_article(3, "article3", "article", "skirsnis3");
+    let article_range = await get_article_range(3);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article3", "law");
+    };
+  })();
+
+  // ARTICLE4
+  (async () => {
+    await add_article(4, "article4", "article", "skirsnis4");
+    let article_range = await get_article_range(4);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article4", "law");
+    };
+  })();
+
+  // ARTICLE5
+  (async () => {
+    await add_article(5, "article5", "article", "skirsnis5");
+    let article_range = await get_article_range(5);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article5", "law");
+    };
+  })();
+
+  // ARTICLE6
+  (async () => {
+    await add_article(6, "article6", "article", "skirsnis6");
+    let article_range = await get_article_range(6);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article6", "law");
+    };
+  })();
+
+  // ARTICLE7
+  (async () => {
+    await add_article(7, "article7", "article", "skirsnis7");
+    let article_range = await get_article_range(7);
+    //let law_start = article_range[0];
+    //let law_end = article_range[1];
+
+    for (let j = 91; j <= 101; j++) {
+      await add_law(j, "article7", "law");
+    };
+  })();
+
+  // ARTICLE8
+  (async () => {
+    await add_article(8, "article8", "article", "skirsnis8");
+    let article_range = await get_article_range(8);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article8", "law");
+    };
+  })();
+
+  // ARTICLE9
+  (async () => {
+    await add_article(9, "article9", "article", "skirsnis9");
+    let article_range = await get_article_range(9);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article9", "law");
+    };
+  })();
+
+  // ARTICLE10
+  (async () => {
+    await add_article(10, "article10", "article", "skirsnis10");
+    let article_range = await get_article_range(10);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article10", "law");
+    };
+  })();
+
+  // ARTICLE11
+  (async () => {
+    await add_article(11, "article11", "article", "skirsnis11");
+    let article_range = await get_article_range(11);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article11", "law");
+    };
+  })();
+
+  // ARTICLE12
+  (async () => {
+    await add_article(12, "article12", "article", "skirsnis12");
+    let article_range = await get_article_range(12);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article12", "law");
+    };
+  })();
+
+  // ARTICLE13
+  (async () => {
+    await add_article(13, "article13", "article", "skirsnis13");
+    let article_range = await get_article_range(13);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article13", "law");
+    };
+  })();
+
+  // ARTICLE14
+  (async () => {
+    await add_article(14, "article14", "article", "skirsnis14");
+    let article_range = await get_article_range(14);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      await add_law(j, "article14", "law");
+    };
+  })();
+
+  // ARTICLE15
+  (async () => {
+    await add_article(15, "article15", "article", "skirsnis15");
+    let article_range = await get_article_range(15);
+    console.log(article_range);
+    let law_start = article_range[0];
+    let law_end = article_range[1];
+
+    for (let j = law_start; j <= law_end; j++) {
+      if (j == 155){
+        break;
+      }
+      await add_law(j, "article15", "law");
+    };
+    await add_law(155, "outro", "outro");
+
+  })();
+
 
   // DONATORS
   (async () => {
-
     donator_count = await get_donator_count();
 
     for (i = donator_count; i >= 1; i--){
       donator_data = await get_donator_data(i);
       await add_donator(i, donator_data, false);
     }
-    
   })();
 
   function add_article(articlenum, location, class_id, id) {
@@ -313,3 +497,34 @@ function amount_validation() {
     return user_input_amount
   }
 }
+
+let width = 1;
+setInterval(async function(){
+  if (progress <= 154){
+    console.log(progress);
+    let elem = document.getElementById("bar");
+    width++;
+    elem.style.width = width + "%";
+    elem.innerHTML = width + "%";
+  }
+}, 1000);
+
+
+function move() {
+  if (progress = 0) {
+    progress = 1;
+    var elem = document.getElementById("myBar");
+    var width = 10;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        progress = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        elem.innerHTML = width + "%";
+      }
+    }
+  }
+} 
