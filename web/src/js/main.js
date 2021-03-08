@@ -4,7 +4,7 @@ const NETWORK_ID = 97; // BNB network id;
 const PROVIDERS = [
 'https://data-seed-prebsc-1-s1.binance.org:8545',
 'https://bsc-dataseed.binance.org',
-'seed.lietuvos-respublikos-konstitucija.crypto'
+'seed.lietuvos-respublikos-konstitucija.net'
 ];
 var defined_user_web3;
 var defined_client_address;
