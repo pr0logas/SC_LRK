@@ -486,7 +486,7 @@ function contribute_to_the_project() {
     }
 
   } else {
-    alert("Jūs neturite susidiegę 'Metamask' įskiepio arba naudojate ne 'Binance Smart Chain'")
+    alert("Jūs neturite susidiegę 'Metamask' įskiepio arba naudojate ne 'Binance Smart Chain' blokų grandinę.")
   }
 }
 
