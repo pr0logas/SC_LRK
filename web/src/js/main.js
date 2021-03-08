@@ -88,8 +88,9 @@ function run_the_engine(web3) {
       add_law_custom_text(roots, "intro", "roots");
     });
 
-      for (let i = 12; i <= 12 ; i++) {
-        await add_article(i, "laws", "article", "article");
+      for (let i = 1; i <= 15 ; i++) {
+        let article_id = "skirsnis" + i;
+        await add_article(i, "laws", "article", article_id);
         let article_range = await get_article_range(i);
         let law_start = article_range[0];
         let law_end = article_range[1];
@@ -124,12 +125,13 @@ function run_the_engine(web3) {
     
   })();
 
-  function add_article(articlenum, location, class_id) {
+  function add_article(articlenum, location, class_id, id) {
     return new Promise(function(resolve){
       var h3 = document.createElement('h3');
       var hr = document.createElement('hr');
 
       h3.setAttribute('class', class_id);
+      h3.setAttribute('id', id);
       article_value = get_article_name(articlenum).then( (value) => { return value; });
       article_value.then(function (value){
         h3.textContent = value;
