@@ -9,7 +9,7 @@ const PROVIDERS = [
 var defined_user_web3;
 var defined_client_address;
 var donation_completed = false;
-var progress = 0;
+var bar_width = 1;
 
 
 if (window.ethereum) {
@@ -79,38 +79,6 @@ function run_the_engine(web3) {
       $("#authors").html(authors);
     });
   })();
-
-
-/*
-  // ARTICLE1
-  (async () => {
-    CONTRACT.methods.LITHUANIAN_ROOTS_INFO().call().then( function( roots ) { 
-      add_law_custom_text(roots, "intro", "roots");
-    });
-      for (let i = 1; i <= 15 ; i++) {
-        let article_id = "skirsnis" + i;
-        await add_article(i, "laws", "article", article_id);
-        let article_range = await get_article_range(i);
-        let law_start = article_range[0];
-        let law_end = article_range[1];
-
-        for (let j = law_start; j <= law_end; j++) {
-          if (j == 155){
-            break;
-          }
-          await add_law(j, "laws", "law");
-        };
-
-        if (i == 7){
-          for (let k = 91; k <= 101; k++) {
-            await add_law(k, "laws", "law");
-          };
-        }
-      };
-      await add_law(155, "outro", "outro");
-      document.getElementById("loader").style.display = "none";
-  })();
-  */
 
   // ARTICLE1
   (async () => {
@@ -338,6 +306,7 @@ function run_the_engine(web3) {
         document.getElementById(location).appendChild(li);
         document.getElementById(location).appendChild(hr);
         resolve();
+        increment_progress_bar();
       });
     });
   }
@@ -497,34 +466,19 @@ function amount_validation() {
     return user_input_amount
   }
 }
-
-let width = 1;
+/*
 setInterval(async function(){
-  if (progress <= 154){
-    console.log(progress);
-    let elem = document.getElementById("bar");
-    width++;
-    elem.style.width = width + "%";
-    elem.innerHTML = width + "%";
-  }
+  increment_progress_bar();
 }, 1000);
+*/
 
+function increment_progress_bar() {
+  let bar_progress = document.getElementById("bar");
+  let bar_total = document.getElementById("bar");
 
-function move() {
-  if (progress = 0) {
-    progress = 1;
-    var elem = document.getElementById("myBar");
-    var width = 10;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        progress = 0;
-      } else {
-        width++;
-        elem.style.width = width + "%";
-        elem.innerHTML = width + "%";
-      }
-    }
+  if (bar_width <= 154){
+    bar_width++;
+    bar_progress.style.width = bar_width + "%";
+    bar_progress.innerHTML = bar_width - 1 ;
   }
-} 
+}
