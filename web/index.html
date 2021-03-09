@@ -120,10 +120,11 @@
       #bar {
         width: 1%;
         height: 30px;
-        background-color: green;
+        background-color: #2574A9;
       }
 
       .sidebar-container {
+        top: 0px;
         position: fixed;
         width: 20%;
         max-width: 280px;
@@ -177,6 +178,7 @@
         outline: none;
       }
 
+
       .sidebar-navigation li::before {
         background-color: #2574A9;
         position: absolute;
@@ -208,6 +210,10 @@
       .content-container {
         padding-left: 220px;
       }
+
+      .progress_bar_class {
+        text-align: center;
+      }
       
     </style>
   </head>
@@ -215,15 +221,13 @@
   <body class="container-custom" id="bootstrap-override">
     <h6 class="clientWalletAddrPostition"><span id="client_account"></span></h6>
     <div class="sidenav">
-      <div id=loader>
-        <p>Kraunasi...</p>
-      </div>
 
+
+
+    <div class="sidebar-container">
       <div id="progressBar">
         <div id="bar"></div>
       </div>
-
-    <div class="sidebar-container">
       <ul class="sidebar-navigation">
         <li class="header">LIETUVOS RESPUBLIKOS KONSTITUCIJA</li>
         <li>
@@ -306,15 +310,10 @@
             <i class="fa fa-home" aria-hidden="true"></i> BAIGIAMIEJI NUOSTATAI
           </a>
         </li>
-        <li>
-          <a href="#">
-            <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
-          </a>
-        </li>
         <li class="header">ĮSIAMŽINKITE</li>
         <li>
           <a href="#donators">
-            <i class="fa fa-users" aria-hidden="true"></i> Prisidėjusiųjų Sąrašas
+            <i class="fa fa-users" aria-hidden="true"></i> Prisidėjusiųjų sąrašas
           </a>
         </li>
       </ul>
@@ -344,7 +343,7 @@
     </ol>
     <p id="outro"></p>
 
-    <div class="alert alert-secondary text-center" role="alert">
+    <div class="alert alert-secondary text-center" role="alert" id="donators">
       Žmonės, kurie įamžino savo <a href="https://coinmarketcap.com/currencies/binance-coin/" target="_blank"><img src="https://gateway.pinata.cloud/ipfs/QmeUHtc3ygrX9nm8xYbMZ3KsHDBts17YqVyKhPtyqJVRZU/bsc_icon.png" alt="bsc" width="16" height="16"> Binance Smart Chain</a> kripto pinigines:
     </div>
 
