@@ -9,7 +9,8 @@ const PROVIDERS = [
 var defined_user_web3;
 var defined_client_address;
 var donation_completed = false;
-var bar_width = 1;
+var bar_width = 0;
+var progress = 0;
 
 
 if (window.ethereum) {
@@ -252,7 +253,6 @@ function run_the_engine(web3) {
   (async () => {
     await add_article(15, "article15", "article", "skirsnis15");
     let article_range = await get_article_range(15);
-    console.log(article_range);
     let law_start = article_range[0];
     let law_end = article_range[1];
 
@@ -466,19 +466,16 @@ function amount_validation() {
     return user_input_amount
   }
 }
-/*
-setInterval(async function(){
-  increment_progress_bar();
-}, 1000);
-*/
 
 function increment_progress_bar() {
   let bar_progress = document.getElementById("bar");
-  let bar_total = document.getElementById("bar");
+  let incr = 100 / 154;
 
-  if (bar_width <= 154){
-    bar_width++;
+  if (progress <= 154){
+    bar_width = bar_width + incr;
+    progress++;; 
+    let percent = parseFloat(bar_width).toFixed(0) - 1;
     bar_progress.style.width = bar_width + "%";
-    bar_progress.innerHTML = bar_width - 1 ;
+
   }
 }
