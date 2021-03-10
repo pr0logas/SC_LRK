@@ -20,6 +20,7 @@
     <meta property="og:description" content="Lietuvos Respublikos Konstitucija, Lietuvos įstatymai, BSC Blockchain" />
     <meta name="keywords" content="lietuva, lietuvos, istatymai, binance smart chain, crypto, blokų grandinė"/>
 
+
     <link rel="stylesheet" href="https://cloudflare-ipfs.com/ipfs/QmQ7WvdBR2wHBn2FDZy6Pn5XFf3Z2G2SPsoqbjhYyw7EAR/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="shortcut icon" href="https://cloudflare-ipfs.com/ipfs/QmQ7WvdBR2wHBn2FDZy6Pn5XFf3Z2G2SPsoqbjhYyw7EAR/favicon.ico" type="image/x-icon">
 
@@ -53,6 +54,11 @@
         margin-left: 10px;
       }
 
+      h6 {
+        text-align: right;
+        font-size: 15px;
+      }
+
       #bootstrap-override td {
         vertical-align: middle;
       }
@@ -71,9 +77,12 @@
         font-size: 16px;
         white-space: pre-line;
         font-style: italic;
+        margin-bottom: 70px;
+        margin-top: 30px;
       }
       .article {
         font-size: 24px;
+        margin-top: 50px;
       }
       .law {
         white-space: pre-line;
@@ -85,6 +94,8 @@
         font-style: italic;
         list-style-type: none;
         white-space: pre-line;
+        margin-top: 40px;
+        margin-bottom: 50px;
       }
 
       .sidenav {
@@ -203,6 +214,17 @@
         padding: 15px 15px 10px 30px;
       }
 
+      .header_bottom {
+        position:absolute;
+        font-size: 9px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        bottom: 0%;
+        margin-top: 0;
+        margin-bottom: 0;
+
+      }
+
       .sidebar-navigation .header::before {
         background-color: transparent;
       }
@@ -214,15 +236,34 @@
       .progress_bar_class {
         text-align: center;
       }
+
+      .bs-example{
+    	  margin: 20px;
+        position: relative;
+    }
       
     </style>
   </head>
-
   <body class="container-custom" id="bootstrap-override">
+
+        <div class="toast" id="myToast" style="position: fixed; bottom: 0%; right: 0; margin: 20px" data-autohide="false">
+            <div class="toast-header">
+                <strong class="mr-auto"><i class="fa fa-grav"></i><img src="https://gateway.pinata.cloud/ipfs/QmeUHtc3ygrX9nm8xYbMZ3KsHDBts17YqVyKhPtyqJVRZU/lt.png" height="16px" width="16px" alt="LT"></img></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" style="text-align: justify">
+                <div>Ši svetainė naudoja <a href="https://en.wikipedia.org/wiki/Blockchain" target="_blank">blockchain</a> technologiją.
+                Duomenys kraunami iš blokų grandinės: jie <b>negali</b> būti pakeisti ar sunaikinti.
+                Svetainė talpinama decentralizuotoje failų sistemoje <a href="https://en.wikipedia.org/wiki/InterPlanetary_File_System" target="_blank">IPFS</a>.
+                </div>
+            </div>
+        </div>
+
+    
     <h6 class="clientWalletAddrPostition"><span id="client_account"></span></h6>
     <div class="sidenav">
-
-
 
     <div class="sidebar-container">
       <div id="progressBar">
@@ -316,9 +357,10 @@
             <i class="fa fa-users" aria-hidden="true"></i> Prisidėjusiųjų sąrašas
           </a>
         </li>
-      </ul>
-    </div>
 
+      </ul>
+      <p class="header_bottom" id="sc_addr"></p>
+    </div>
     </div>
 
     <center><h1 class="page-header" id=home><span><img class="ltflag" src=""></span><span id="lrktitle"></span></h1></center>

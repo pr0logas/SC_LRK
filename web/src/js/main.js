@@ -55,7 +55,7 @@ function run_the_engine(web3) {
 
     else if (accounts.length >= 1) {
       defined_client_address = accounts[0];
-      document.getElementById('client_account').innerHTML = defined_client_address;
+      document.getElementById('client_account').innerHTML = "Jūsų piniginės adresas: " + "<a href=\"https://bscscan.com/address/" + defined_client_address + "\" target=\"blank\">" + defined_client_address + "</a>";
       web3.eth.defaultAccount = defined_client_address;
     } 
   });
@@ -81,8 +81,23 @@ function run_the_engine(web3) {
     });
   })();
 
+  // SC address
+  (function () {
+      sc_addr = "Smart Contract Address: <br>" + CONTRACT_ADDRESS;
+      $("#sc_addr").html(sc_addr);
+
+  })();
+
   // ARTICLE1
   (async () => {
+    CONTRACT.methods.LITHUANIAN_ROOTS_INFO().call().then( function( roots ) { 
+      add_law_custom_text(roots, "intro", "roots");
+    });
+
+    $(document).ready(function(){
+          $("#myToast").toast('show');
+  });
+
     await add_article(1, "article1", "article", "skirsnis1");
     let article_range = await get_article_range(1);
     let law_start = article_range[0];
